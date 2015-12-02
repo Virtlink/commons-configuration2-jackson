@@ -7,6 +7,7 @@ deploy:
   provider: releases
   api_key: $GITHUB_APIKEY
   file: "build/libs/commons-configuration2-jackson-*.jar"
+  skip_cleanup: true
   on:
     repo: Virtlink/commons-configuration2-jackson
     branch: master
