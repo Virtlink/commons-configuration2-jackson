@@ -5,8 +5,7 @@ after_success:
 - coveralls
 deploy:
   provider: releases
-  api_key:
-    secure: spN6XyPn+4MHyCueKpDgzmoDj4NROjTX6nmBj2yS9WkpL8nnMyECPOFYIEwyZHzDz6HLxiyj4rVlmBoU5pDnyhw7LM0QNSYxez40r9kCpv3Ux7gJN8JLcR9pt++POI1ruxwgPhv17S5bLNT+OP4qIUK/kzd1+YMhghhDXPAwaPV3TC14wisC62owSMgoKQ5R/KAXFj5iR5uIj/YW4XNzGaL7PeaSWyytELtIIWxRgsemhBCsU+XOIC+0EEKGFHiq7NgRuz81eY2aUU5wzUZFU5w0AePh4eKSwPNOM5rYzHhGg896sYAZzNIaCBbj/zWH4J3kNkEIgSKFF4I6mqXkW3Ji/Pxlo9ee/5bsOuug6u1/b19Vxu8SZ8M7JD730whfGL4CI/uVtGhsjMa/PRgQSJ56afPw2OIfa3VJVKrXoUkXAw3fOPlU00YiKk7rFOHJ5yJLPbN0qHD641TOnSkfWuP8+adEyZ3+y6IAG3s32XHhlgTxF9GO+mv6Vw3/vlVp36sOzyw0XKQey0vLsVnI10vpfi6xKSzfC3qDA4juEtdc6NinPZYPSd3xAhkWEqSZf/vBg55+9ArAOJAr2X8vLCe9CURjgrWexPjZgO8NA8FkCFIPZC+Jfx4nbUPYB/9op8ZpP20NDYs/4Sa2dz4WsaXVCN/UTjGjmPTSenJprZA=
+  api_key: $GITHUB_APIKEY
   file: "build/libs/commons-configuration2-jackson-*.jar"
   on:
     repo: Virtlink/commons-configuration2-jackson
