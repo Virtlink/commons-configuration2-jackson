@@ -16,117 +16,71 @@
 
 package com.virtlink.commons.configuration2.jackson;
 
+import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
+import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
-public final class JsonConfigurationTests {
+public final class JsonConfigurationTests extends JacksonConfigurationTests {
+
+    @Override
+    protected JsonConfiguration create(Map<String, Object> properties) throws ConfigurationException {
+        return new JsonConfiguration();
+    }
+
+    @Override
+    protected String getExampleConfiguration() throws ConfigurationException {
+        return "{\n"
+                + "  \"obj\" : {\n"
+                + "    \"name\" : \"test\",\n"
+                + "    \"value\" : 1\n"
+                + "  },\n"
+                + "  \"name\" : \"testName\",\n"
+                + "  \"listOfObjs\" : [ {\n"
+                + "    \"name\" : \"testname\",\n"
+                + "    \"value\" : 4\n"
+                + "  }, {\n"
+                + "    \"name\" : \"other\",\n"
+                + "    \"value\" : 20\n"
+                + "  } ]\n"
+                + "}";
+    }
 
     @Test
-    public void readConfiguration() throws IOException, ConfigurationException {
-        JsonConfiguration sut = new JsonConfiguration();
-
+    public void emptyArrayIsIgnored() throws IOException, ConfigurationException {
+        // Arrange
         String input = "{\n"
-                + "  \"obj\" : {\n"
-                + "    \"name\" : \"test\",\n"
-                + "    \"value\" : 1\n"
-                + "  },\n"
-                + "  \"name\" : \"testName\",\n"
-                + "  \"listOfObjs\" : [ {\n"
-                + "    \"name\" : \"testname\",\n"
-                + "    \"value\" : 4\n"
-                + "  }, {\n"
-                + "    \"name\" : \"other\",\n"
-                + "    \"value\" : 20\n"
-                + "  } ]\n"
+                + "\"emptyArray\" : []\n"
                 + "}";
-
-        StringReader reader = new StringReader(input);
-        sut.read(reader);
-
-        assertThat(sut.getString("name"), is("testName"));
-        assertThat(sut.getString("obj.name"), is("test"));
-        assertThat(sut.getInt("obj.value"), is(1));
-        assertThat(sut.getString("listOfObjs(0).name"), is("testname"));
-        assertThat(sut.getInt("listOfObjs(0).value"), is(4));
-        assertThat(sut.getString("listOfObjs(1).name"), is("other"));
-        assertThat(sut.getInt("listOfObjs(1).value"), is(20));
-        assertThat(sut.getStringArray("listOfObjs.name"), is(new String[] { "testname", "other" }));
-        assertThat(sut.getProperty("nullValue"), is(nullValue()));
-        assertThat(sut.getProperty("emptyList"), is(nullValue()));
-    }
-
-    @Test
-    public void writeConfiguration() throws IOException, ConfigurationException {
         JsonConfiguration sut = new JsonConfiguration();
 
-        sut.setProperty("name", "testName");
-        sut.setProperty("obj.name", "test");
-        sut.setProperty("obj.value", 1);
-        sut.addProperty("listOfObjs(-1).name", "testname");
-        sut.addProperty("listOfObjs.value", 4);
-        sut.addProperty("listOfObjs(-1).name", "other");
-        sut.addProperty("listOfObjs.value", 20);
+        // Act
+        sut.read(new StringReader(input));
 
-        StringWriter writer = new StringWriter();
-        sut.write(writer);
-
-        String expected = "{\n"
-                + "  \"obj\" : {\n"
-                + "    \"name\" : \"test\",\n"
-                + "    \"value\" : 1\n"
-                + "  },\n"
-                + "  \"name\" : \"testName\",\n"
-                + "  \"listOfObjs\" : [ {\n"
-                + "    \"name\" : \"testname\",\n"
-                + "    \"value\" : 4\n"
-                + "  }, {\n"
-                + "    \"name\" : \"other\",\n"
-                + "    \"value\" : 20\n"
-                + "  } ]\n"
-                + "}";
-
-        assertThat(writer.toString(), is(expected));
+        // Assert
+        assertThat(sut.getProperty("emptyArray"), is(nullValue()));
     }
 
     @Test
-    public void readWriteReadConfiguration() throws IOException, ConfigurationException {
-        String str = "{\n"
-                + "  \"obj\" : {\n"
-                + "    \"name\" : \"test\",\n"
-                + "    \"value\" : 1\n"
-                + "  },\n"
-                + "  \"name\" : \"testName\",\n"
-                + "  \"listOfObjs\" : [ {\n"
-                + "    \"name\" : \"testname\",\n"
-                + "    \"value\" : 4\n"
-                + "  }, {\n"
-                + "    \"name\" : \"other\",\n"
-                + "    \"value\" : 20\n"
-                + "  } ]\n"
+    public void nullIsIgnored() throws IOException, ConfigurationException {
+        // Arrange
+        String input = "{\n"
+                + "\"nullValue\" : null\n"
                 + "}";
+        JsonConfiguration sut = new JsonConfiguration();
 
-        JsonConfiguration config = new JsonConfiguration();
-        config.read(new StringReader(str));
+        // Act
+        sut.read(new StringReader(input));
 
-        StringWriter writer = new StringWriter();
-        config.write(writer);
-        String str2 = writer.toString();
-
-        JsonConfiguration config2 = new JsonConfiguration();
-        config2.read(new StringReader(str2));
-
-        StringWriter writer2 = new StringWriter();
-        config.write(writer2);
-        String str3 = writer2.toString();
-
-        assertThat(str2, is(str3));
+        // Assert
+        assertThat(sut.getProperty("nullValue"), is(nullValue()));
     }
+
 }

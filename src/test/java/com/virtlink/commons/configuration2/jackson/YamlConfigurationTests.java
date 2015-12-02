@@ -17,62 +17,29 @@
 package com.virtlink.commons.configuration2.jackson;
 
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-public final class YamlConfigurationTests {
+public final class YamlConfigurationTests extends JacksonConfigurationTests{
 
-    @Test
-    public void readConfiguration() throws IOException, ConfigurationException {
-        JacksonConfiguration sut = new JacksonConfiguration(new YAMLFactory()) {};
-
-        String input = "---\n"
-                + "obj:\n"
-                + "  name: \"test\"\n"
-                + "  value: 1\n"
-                + "name: \"testName\"\n"
-                + "listOfObjs:\n"
-                + "- name: \"testname\"\n"
-                + "  value: 4\n"
-                + "- name: \"other\"\n"
-                + "  value: 20\n";
-
-        StringReader reader = new StringReader(input);
-        sut.read(reader);
-
-        assertThat(sut.getString("name"), is("testName"));
-        assertThat(sut.getString("obj.name"), is("test"));
-        assertThat(sut.getInt("obj.value"), is(1));
-        assertThat(sut.getString("listOfObjs(0).name"), is("testname"));
-        assertThat(sut.getInt("listOfObjs(0).value"), is(4));
-        assertThat(sut.getString("listOfObjs(1).name"), is("other"));
-        assertThat(sut.getInt("listOfObjs(1).value"), is(20));
-        assertThat(sut.getStringArray("listOfObjs.name"), is(new String[] { "testname", "other" }));
+    @Override
+    protected JacksonConfiguration create(Map<String, Object> properties) throws ConfigurationException {
+        return new JacksonConfiguration(new YAMLFactory()) {};
     }
 
-    @Test
-    public void writeConfiguration() throws IOException, ConfigurationException {
-        JacksonConfiguration sut = new JacksonConfiguration(new YAMLFactory()) {};
-
-        sut.setProperty("name", "testName");
-        sut.setProperty("obj.name", "test");
-        sut.setProperty("obj.value", 1);
-        sut.addProperty("listOfObjs(-1).name", "testname");
-        sut.addProperty("listOfObjs.value", 4);
-        sut.addProperty("listOfObjs(-1).name", "other");
-        sut.addProperty("listOfObjs.value", 20);
-
-        StringWriter writer = new StringWriter();
-        sut.write(writer);
-
-        String expected = "---\n"
+    @Override
+    protected String getExampleConfiguration() throws ConfigurationException {
+        return "---\n"
                 + "obj:\n"
                 + "  name: \"test\"\n"
                 + "  value: 1\n"
@@ -82,7 +49,5 @@ public final class YamlConfigurationTests {
                 + "  value: 4\n"
                 + "- name: \"other\"\n"
                 + "  value: 20\n";
-
-        assertThat(writer.toString(), is(expected));
     }
 }

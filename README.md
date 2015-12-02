@@ -9,7 +9,21 @@ TBD
 
 
 ## Usage
-TBD
+Create a new configuration through one of the configuration builders,
+
+```
+Parameters params = new Parameters();
+BasicConfigurationBuilder<JsonConfiguration> builder =
+    new BasicConfigurationBuilder<JsonConfiguration>(JsonConfiguration.class)
+        .configure(params.basic());
+JsonConfiguration config = builder.getConfiguration();
+```
+
+or instantiate the configuration class directly.
+
+```
+JsonConfiguration config = new JsonConfiguration();
+```
 
 
 ## Questions and Issues

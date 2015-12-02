@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.apache.commons.configuration2.BaseHierarchicalConfiguration;
 import org.apache.commons.configuration2.FileBasedConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.io.FileLocator;
 import org.apache.commons.configuration2.io.FileLocatorAware;
@@ -56,13 +57,25 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Initializes a new instance of the {@link JacksonConfiguration} class.
      *
-     * @param jsonFactory The JSON factory.
+     * @param factory The Jackson factory to use.
      */
-    protected JacksonConfiguration(final JsonFactory jsonFactory) {
-        Preconditions.checkNotNull(jsonFactory);
+    protected JacksonConfiguration(final JsonFactory factory) {
+        this(factory, null);
+    }
+
+    /**
+     * Initializes a new instance of the {@link JacksonConfiguration} class.
+     *
+     * @param factory The Jackson factory to use.
+     * @param config The configuration whose nodes to copy into this configuration.
+     */
+    protected JacksonConfiguration(final JsonFactory factory, final HierarchicalConfiguration<ImmutableNode> config) {
+        super(config);
+
+        Preconditions.checkNotNull(factory);
 
         this.module = new SimpleModule();
-        this.mapper = new ObjectMapper(jsonFactory);
+        this.mapper = new ObjectMapper(factory);
         this.mapper.registerModule(this.module);
     }
 
@@ -92,9 +105,8 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
         Preconditions.checkNotNull(reader);
 
         HashMap<String, Object> settings = this.mapper.readValue(reader, HASH_MAP_TYPE_REFERENCE);
-        String rootName = null;
         ImmutableNode rootNode = toNodes(null, settings).iterator().next();
-        this.getSubConfigurationParentModel().mergeRoot(rootNode, rootName, null, null, this);
+        this.getSubConfigurationParentModel().mergeRoot(rootNode, null, null, null, this);
     }
 
     /**
@@ -111,11 +123,12 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
         @SuppressWarnings("unchecked")
         HashMap<String, Object> settings = (HashMap<String, Object>) fromNode(this.getModel().getInMemoryRepresentation());
         this.mapper.writerWithDefaultPrettyPrinter().writeValue(writer, settings);
-//        this.mapper.writeValue(writer, settings);
     }
 
     /**
-     * @param locator
+     * Sets the file locator to use for the next invocation of {@link #read(InputStream)} or {@link #write(Writer)}.
+     *
+     * @param locator The file locator to use; or <code>null</code>.
      */
     @Override
     public void initFileLocator(@Nullable final FileLocator locator) {
