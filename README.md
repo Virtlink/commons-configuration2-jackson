@@ -2,13 +2,28 @@
 This project adds support for FasterXML's Jackson to Apache Commons
 Configuration 2.
 
+[![Build Status](https://travis-ci.org/Virtlink/commons-configuration2-jackson.svg)](https://travis-ci.org/Virtlink/commons-configuration2-jackson) [![Coverage Status](https://coveralls.io/repos/Virtlink/commons-configuration2-jackson/badge.svg?branch=master&service=github)](https://coveralls.io/github/Virtlink/commons-configuration2-jackson?branch=master)
 
 ## Installation
 TBD
 
 
 ## Usage
-TBD
+Create a new configuration through one of the configuration builders,
+
+```
+Parameters params = new Parameters();
+BasicConfigurationBuilder<JsonConfiguration> builder =
+    new BasicConfigurationBuilder<JsonConfiguration>(JsonConfiguration.class)
+        .configure(params.basic());
+JsonConfiguration config = builder.getConfiguration();
+```
+
+or instantiate the configuration class directly.
+
+```
+JsonConfiguration config = new JsonConfiguration();
+```
 
 
 ## Questions and Issues

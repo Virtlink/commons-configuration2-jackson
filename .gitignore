@@ -31,3 +31,8 @@ gradle-app.setting
 *.ipr
 *.iws
 /out/
+
+
+### Travis ###
+*travis.log
+

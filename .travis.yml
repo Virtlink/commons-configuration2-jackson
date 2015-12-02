@@ -1,0 +1,13 @@
+language: java
+jdk:
+- oraclejdk8
+after_success:
+- coveralls
+deploy:
+  provider: releases
+  api_key: $GITHUB_APIKEY
+  file: "build/libs/commons-configuration2-jackson-*.jar"
+  on:
+    repo: Virtlink/commons-configuration2-jackson
+    branch: master
+    tags: true
