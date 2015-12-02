@@ -1,11 +1,21 @@
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+plugins {
+	id "java"
+	id "idea"
+	id "eclipse"
+	id "maven-publish"
+	id "com.jfrog.bintray" version "1.5"
+}
 
 group 'com.virtlink.commons'
 version '0.1.0'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+def description   = "Adds support for FasterXML's Jackson to Apache Commons Configuration 2."
+def bintrayUser   = project.hasProperty('bintrayUser')   ? project.property('bintrayUser')   : System.getenv('BINTRAY_USER')
+def bintrayApiKey = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+def repoSlug      = project.hasProperty('repoSlug')      ? project.property('repoSlug')      : System.getenv('TRAVIS_REPO_SLUG')
+def vcsTag        = project.hasProperty('vcsTag')        ? project.property('vcsTag')        : System.getenv('TRAVIS_TAG')
 
 configurations {
     provided
@@ -32,3 +42,70 @@ dependencies {
 sourceSets.main.compileClasspath += configurations.provided
 idea.module.scopes.PROVIDED.plus += [configurations.provided]
 eclipse.classpath.plusConfigurations += configurations.provided
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "virtlink"
+            name "Daniel Pelsmaeker"
+            email "info@virtlink.com"
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', description)
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+
+bintray {
+	user = bintrayUser
+	key = bintrayApiKey
+    publications = ['mavenJava']
+    dryRun = false
+    publish = false
+    pkg {
+        repo = 'maven'
+        name = project.name
+        desc = description
+        websiteUrl = "https://github.com/${repoSlug}"
+        issueTrackerUrl = "https://github.com/${repoSlug}/issues"
+        vcsUrl = "https://github.com/${repoSlug}.git"
+        licenses = ['Apache-2.0']
+        version {
+            name = project.version
+            released  = new Date()
+            vcsTag = vcsTag
+        }
+    }
+}
