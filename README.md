@@ -1,10 +1,11 @@
+[![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson.svg)](https://travis-ci.org/Virtlink/commons-configuration2-jackson)
+[![GitHub version](https://badge.fury.io/gh/Virtlink%2Fcommons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
+[![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE) 
+
 # Jackson for Commons Configuration 2
 This project adds support for FasterXML's Jackson to Apache Commons
 Configuration 2.
 
-[![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson.svg)](https://travis-ci.org/Virtlink/commons-configuration2-jackson)
-[![GitHub version](https://badge.fury.io/gh/Virtlink%2Fcommons-configuration2-jackson.svg)](https://badge.fury.io/gh/Virtlink%2Fcommons-configuration2-jackson)
-[![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE) 
 
 ## Installation
 Download the [latest release](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest) and place the `.jar` in your project.
@@ -47,7 +48,7 @@ or write to a `Writer`
 try (Writer writer = new PrintWriter("settings.json", "UTF-8")) {
 	config.write(writer);
 }
-```.
+```
 
 
 ## Questions and Issues
