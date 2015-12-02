@@ -30,7 +30,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-public final class YamlConfigurationTests extends JacksonConfigurationTests{
+public final class YamlConfigurationTests extends JacksonConfigurationTests {
 
     @Override
     protected JacksonConfiguration create(Map<String, Object> properties) throws ConfigurationException {

@@ -17,6 +17,8 @@
 package com.virtlink.commons.configuration2.jackson;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
 
 /**
  * A configuration in JSON.
@@ -28,5 +30,14 @@ public class JsonConfiguration extends JacksonConfiguration {
      */
     public JsonConfiguration() {
         super(new JsonFactory());
+    }
+
+    /**
+     * Initializes a new instance of the {@link JsonConfiguration} class.
+     *
+     * @param config The configuration whose nodes to copy into this configuration.
+     */
+    public JsonConfiguration(final HierarchicalConfiguration<ImmutableNode> config) {
+        super(new JsonFactory(), config);
     }
 }

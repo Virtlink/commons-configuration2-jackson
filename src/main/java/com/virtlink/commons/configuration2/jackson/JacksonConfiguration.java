@@ -67,7 +67,7 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
      * Initializes a new instance of the {@link JacksonConfiguration} class.
      *
      * @param factory The Jackson factory to use.
-     * @param config The configuration whose nodes to copy into this configuration.
+     * @param config  The configuration whose nodes to copy into this configuration.
      */
     protected JacksonConfiguration(final JsonFactory factory, final HierarchicalConfiguration<ImmutableNode> config) {
         super(config);

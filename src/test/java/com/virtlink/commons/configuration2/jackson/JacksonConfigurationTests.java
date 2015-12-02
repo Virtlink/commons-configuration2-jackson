@@ -31,6 +31,29 @@ import static org.junit.Assert.assertThat;
 
 public abstract class JacksonConfigurationTests {
 
+    @Test
+    public void readConfiguration() throws IOException, ConfigurationException {
+        // Arrange
+        JacksonConfiguration sut = create();
+        String input = getExampleConfiguration();
+
+        // Act
+        StringReader reader = new StringReader(input);
+        sut.read(reader);
+
+        // Assert
+        assertThat(sut.getString("name"), is("testName"));
+        assertThat(sut.getString("obj.name"), is("test"));
+        assertThat(sut.getInt("obj.value"), is(1));
+        assertThat(sut.getString("listOfObjs(0).name"), is("testname"));
+        assertThat(sut.getInt("listOfObjs(0).value"), is(4));
+        assertThat(sut.getString("listOfObjs(1).name"), is("other"));
+        assertThat(sut.getInt("listOfObjs(1).value"), is(20));
+        assertThat(sut.getStringArray("listOfObjs.name"), is(new String[]{"testname", "other"}));
+        assertThat(sut.getProperty("nullValue"), is(nullValue()));
+        assertThat(sut.getProperty("emptyList"), is(nullValue()));
+    }
+
     /**
      * Creates a new {@link JacksonConfiguration} for use in tests.
      *
@@ -41,21 +64,12 @@ public abstract class JacksonConfigurationTests {
     }
 
     /**
-     * Creates a new {@link JacksonConfiguration} for use in tests.
-     *
-     * @param properties The properties in the configuration.
-     *
-     * @return The created configuration.
-     */
-    protected abstract JacksonConfiguration create(Map<String, Object> properties) throws ConfigurationException;
-
-    /**
      * Returns an example configuration string.
-     *
+     * <p>
      * Override this method to provide an example for the configuration implementation.
-     *
+     * <p>
      * The model must have the following structure:
-     *
+     * <p>
      * <pre>
      * obj.name: "test"
      * obj.value: 1
@@ -91,28 +105,13 @@ public abstract class JacksonConfigurationTests {
         return writer.toString();
     }
 
-    @Test
-    public void readConfiguration() throws IOException, ConfigurationException {
-        // Arrange
-        JacksonConfiguration sut = create();
-        String input = getExampleConfiguration();
-
-        // Act
-        StringReader reader = new StringReader(input);
-        sut.read(reader);
-
-        // Assert
-        assertThat(sut.getString("name"), is("testName"));
-        assertThat(sut.getString("obj.name"), is("test"));
-        assertThat(sut.getInt("obj.value"), is(1));
-        assertThat(sut.getString("listOfObjs(0).name"), is("testname"));
-        assertThat(sut.getInt("listOfObjs(0).value"), is(4));
-        assertThat(sut.getString("listOfObjs(1).name"), is("other"));
-        assertThat(sut.getInt("listOfObjs(1).value"), is(20));
-        assertThat(sut.getStringArray("listOfObjs.name"), is(new String[] { "testname", "other" }));
-        assertThat(sut.getProperty("nullValue"), is(nullValue()));
-        assertThat(sut.getProperty("emptyList"), is(nullValue()));
-    }
+    /**
+     * Creates a new {@link JacksonConfiguration} for use in tests.
+     *
+     * @param properties The properties in the configuration.
+     * @return The created configuration.
+     */
+    protected abstract JacksonConfiguration create(Map<String, Object> properties) throws ConfigurationException;
 
     @Test
     public void readWriteReadConfiguration() throws IOException, ConfigurationException {
