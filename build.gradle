@@ -1,0 +1,34 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+group 'com.virtlink.commons'
+version '0.1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    provided
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://repository.apache.org/content/repositories/snapshots/"
+    }
+}
+
+dependencies {
+    compile 'org.apache.commons:commons-configuration2:2.0-alpha1-SNAPSHOT'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.6.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0'
+
+    provided 'com.google.code.findbugs:findbugs:3.0.1'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.6.0'
+}
+
+sourceSets.main.compileClasspath += configurations.provided
+idea.module.scopes.PROVIDED.plus += [configurations.provided]
+eclipse.classpath.plusConfigurations += configurations.provided
