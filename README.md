@@ -1,17 +1,26 @@
+[![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson.svg)](https://travis-ci.org/Virtlink/commons-configuration2-jackson)
+[![GitHub version](https://badge.fury.io/gh/Virtlink%2Fcommons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
+[![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE) 
+
 # Jackson for Commons Configuration 2
 This project adds support for FasterXML's Jackson to Apache Commons
 Configuration 2.
 
-[![Build Status](https://travis-ci.org/Virtlink/commons-configuration2-jackson.svg)](https://travis-ci.org/Virtlink/commons-configuration2-jackson) [![Coverage Status](https://coveralls.io/repos/Virtlink/commons-configuration2-jackson/badge.svg?branch=master&service=github)](https://coveralls.io/github/Virtlink/commons-configuration2-jackson?branch=master)
 
 ## Installation
-TBD
+Download the [latest release](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest) and place the `.jar` in your project.
 
 
 ## Usage
+Import the project's namespace.
+
+```java
+import com.virtlink.commons.configuration2.jackson.JsonConfiguration;
+```
+
 Create a new configuration through one of the configuration builders,
 
-```
+```java
 Parameters params = new Parameters();
 BasicConfigurationBuilder<JsonConfiguration> builder =
     new BasicConfigurationBuilder<JsonConfiguration>(JsonConfiguration.class)
@@ -21,8 +30,24 @@ JsonConfiguration config = builder.getConfiguration();
 
 or instantiate the configuration class directly.
 
-```
+```java
 JsonConfiguration config = new JsonConfiguration();
+```
+
+You can use the configuration to read from a `Reader`
+
+```java
+try (Reader reader = new BufferedReader(new FileReader("settings.json"))) {
+	config.read(reader);
+}
+```
+
+or write to a `Writer`
+
+```java
+try (Writer writer = new PrintWriter("settings.json", "UTF-8")) {
+	config.write(writer);
+}
 ```
 
 

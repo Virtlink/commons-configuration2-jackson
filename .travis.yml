@@ -5,9 +5,12 @@ jdk:
 script:
 - gradle build
 
+after_success:
+- gradle bintrayUpload
+
 deploy:
   provider: releases
-  api_key: ${GITHUB_APIKEY}
+  api_key: ${GITHUB_API_KEY}
   file_glob: true
   file:
     - ./build/libs/commons-configuration2-jackson-*.jar
