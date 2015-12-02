@@ -5,9 +5,6 @@ jdk:
 script:
 - gradle build
 
-before_deploy:
-- ls -R
-
 deploy:
   provider: releases
   api_key: ${GITHUB_APIKEY}
@@ -18,4 +15,4 @@ deploy:
   on:
     repo: Virtlink/commons-configuration2-jackson
     branch: master
-#    tags: true
+    tags: true
