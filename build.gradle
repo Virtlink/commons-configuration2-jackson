@@ -7,7 +7,6 @@ plugins {
 }
 
 group 'com.virtlink.commons'
-version '0.1.1'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -102,6 +101,7 @@ bintray {
         issueTrackerUrl = "https://github.com/${repoSlug}/issues"
         vcsUrl = "https://github.com/${repoSlug}.git"
         licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
         version {
             name = project.version
             released  = new Date()

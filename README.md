@@ -1,7 +1,9 @@
 [![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson.svg)](https://travis-ci.org/Virtlink/commons-configuration2-jackson)
 [![GitHub version](https://badge.fury.io/gh/Virtlink%2Fcommons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
-[![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE)
 [![Bintray](https://img.shields.io/bintray/v/virtlink/maven/commons-configuration2-jackson.svg)](https://bintray.com/virtlink/maven/commons-configuration2-jackson)
+[![Maven Central](https://img.shields.io/maven-central/v/com.virtlink.commons/commons-configuration2-jackson.svg)]()
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson)
+[![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE)
 
 # Jackson for Commons Configuration 2
 This project adds support for FasterXML's Jackson to Apache Commons
@@ -9,7 +11,28 @@ Configuration 2.
 
 
 ## Installation
-Download the [latest release](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest) and place the `.jar` in your project.
+Add the library as a dependency to your project. In Gradle, add
+
+```gradle
+dependencies {
+    compile 'com.virtlink.commons:commons-configuration2-jackson:0.1.1'
+}
+```
+
+In Maven, add
+
+```maven pom
+<dependencies>
+  <dependency>
+    <groupId>com.virtlink.commons</groupId>
+    <artifactId>commons-configuration2-jackson</artifactId>
+    <version>0.1.1</version>
+  </dependency>
+<dependencies>
+```
+
+Otherwise download the [latest release](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
+and add the `.jar` to your project's classpath.
 
 
 ## Usage
