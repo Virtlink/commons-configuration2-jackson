@@ -1,6 +1,7 @@
 [![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson.svg)](https://travis-ci.org/Virtlink/commons-configuration2-jackson)
 [![GitHub version](https://badge.fury.io/gh/Virtlink%2Fcommons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
-[![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE) 
+[![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE)
+[![Bintray](https://img.shields.io/bintray/v/virtlink/maven/commons-configuration2-jackson.svg)](https://bintray.com/virtlink/maven/commons-configuration2-jackson)
 
 # Jackson for Commons Configuration 2
 This project adds support for FasterXML's Jackson to Apache Commons
