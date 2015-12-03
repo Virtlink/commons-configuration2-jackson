@@ -5,15 +5,19 @@ jdk:
 script:
 - gradle build
 
-after_success:
-- gradle bintrayUpload
-
 deploy:
-  provider: releases
+- provider: releases
   api_key: ${GITHUB_API_KEY}
   file_glob: true
   file:
     - ./build/libs/commons-configuration2-jackson-*.jar
+  skip_cleanup: true
+  on:
+    repo: Virtlink/commons-configuration2-jackson
+    branch: master
+    tags: true
+- provider: script
+  script: gradle bintrayUpload
   skip_cleanup: true
   on:
     repo: Virtlink/commons-configuration2-jackson
