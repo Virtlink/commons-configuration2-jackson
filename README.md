@@ -23,7 +23,7 @@ In Maven, add to your `<dependencies>` tag
     <groupId>com.virtlink.commons</groupId>
     <artifactId>commons-configuration2-jackson</artifactId>
     <version>0.1.4</version>
-<dependency>
+</dependency>
 ```
 
 Otherwise download the [latest release](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
