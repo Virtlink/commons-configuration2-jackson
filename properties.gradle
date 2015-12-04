@@ -26,4 +26,7 @@ project.ext.bintray_username      = hasProperty('bintray_username')      ? getPr
 project.ext.bintray_apikey        = hasProperty('bintray_apikey')        ? getProperty('bintray_apikey')        : System.getenv('BINTRAY_API_KEY')
 project.ext.bintray_repo          = hasProperty('bintray_repo')          ? getProperty('bintray_repo')          : "maven"
 
+project.ext.sonatype_username     = hasProperty('sonatype_username')     ? getProperty('sonatype_username')     : System.getenv('SONATYPE_USERNAME')
+project.ext.sonatype_password     = hasProperty('sonatype_password')     ? getProperty('sonatype_password')     : System.getenv('SONATYPE_PASSWORD')
+
 project.ext.gpg_passphrase        = hasProperty('gpg_passphrase')        ? getProperty('gpg_passphrase')        : System.getenv('GPG_PASSPHRASE')

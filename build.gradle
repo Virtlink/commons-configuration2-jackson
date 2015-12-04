@@ -119,6 +119,11 @@ bintray {
 				sign = true
 				passphrase = gpg_passphrase
 			}
+            mavenCentralSync {
+                sync = true
+                user = sonatype_username
+                password = sonatype_password
+            }
 		}
 	}
 }
