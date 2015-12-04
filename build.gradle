@@ -5,6 +5,7 @@ plugins {
     id "maven-publish"
     id "com.jfrog.bintray" version "1.5"
 }
+apply from: 'properties.gradle'
 
 
 sourceCompatibility = 1.8
@@ -55,21 +56,21 @@ task sourcesJar(type: Jar) {
 def pomConfig = {
     scm {
         url scm_url
-        connection properties['scm_connection']
-        developerConnection properties['scm_developer_connection']
+        connection scm_connection
+        developerConnection scm_devconnection
     }
     licenses {
         license {
-            name license_name
-            url properties['license_url']
-            distribution properties['license_distribution']
+            name license_id
+            url license_url
+            distribution license_distribution
         }
     }
     developers {
         developer {
             name developer_name
-            id properties['developer_id']
-            email properties['developer_email']
+            id developer_id
+            email developer_email
         }
     }
 }
@@ -84,10 +85,10 @@ publishing {
 
             pom.withXml {
                 def root = asNode()
-                root.appendNode 'name', project_name
-                root.appendNode 'description', project.properties['project_description']
-                root.appendNode 'url', project.properties['project_url']
-                root.appendNode 'inceptionYear', project.properties['project_inceptionyear']
+                root.appendNode 'name', project.project_name
+                root.appendNode 'description', project.project_description
+                root.appendNode 'url', project.project_url
+                root.appendNode 'inceptionYear', project.project_inceptionyear
                 root.children().last() + pomConfig
             }
         }
@@ -96,27 +97,27 @@ publishing {
 
 
 bintray {
-	user = project.properties['bintray_username']
-	key = project.properties['bintray_apikey']
+	user = project.bintray_username
+	key = project.bintray_apikey
 	publications = ['mavenJava']
 	publish = true
 	pkg {
 		name = project.name
-		desc = project.properties['project_description']
-		websiteUrl = project.properties['project_url']
-		issueTrackerUrl = project.properties['project_issues']
-		vcsUrl = project.properties['vcs_url']
+		desc = project_description
+		websiteUrl = project_url
+		issueTrackerUrl = project_issues
+		vcsUrl = vcs_url
 		licenses = [license_name]
-		repo = bintray_repo
+		repo = project.bintray_repo
 		publicDownloadNumbers = true
 		version {
 			name = project.version
-			desc = project.properties['project_description']
+			desc = project_description
 			released  = new Date()
-			vcsTag = hasProperty('vcs_tag') ? properties['vcs_tag'] : System.getenv('TRAVIS_TAG')
+			vcsTag = vcs_tag
 			gpg {
-				sign = project.hasProperty('gpg_passphrase')
-				passphrase = project.properties['gpg_passphrase']
+				sign = true
+				passphrase = gpg_passphrase
 			}
 		}
 	}
