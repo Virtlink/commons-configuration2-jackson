@@ -60,7 +60,7 @@ public abstract class JacksonConfigurationTests {
      * @return The created configuration.
      */
     protected JacksonConfiguration create() throws ConfigurationException {
-        return create(new HashMap<>());
+        return create(new HashMap<String, Object>());
     }
 
     /**
