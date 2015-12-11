@@ -15,13 +15,13 @@ gradle-app.setting
 .gradletasknamecache
 
 
+
 ### Intellij ###
 *.iml
 *.ipr
 *.iws
 .idea/libraries/
 .idea/dictionaries/
-.idea/gradle.xml
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/dataSources.xml
@@ -29,7 +29,11 @@ gradle-app.setting
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
-/out/
+out/
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
 
 
 ### Travis ###

@@ -34,7 +34,6 @@ import org.apache.commons.configuration2.tree.ImmutableNode.Builder;
 import javax.annotation.Nullable;
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * A configuration using a Jackson language (e.g. YAML, JSON).
@@ -196,8 +195,7 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
      */
     private Object fromNode(ImmutableNode node) {
         if (!node.getChildren().isEmpty()) {
-            Map<String, List<ImmutableNode>> children = node.getChildren().stream()
-                    .collect(Collectors.groupingBy(ImmutableNode::getNodeName));
+            Map<String, List<ImmutableNode>> children = getChildrenWithName(node);
 
             HashMap<String, Object> map = new HashMap<>();
             for (Map.Entry<String, List<ImmutableNode>> entry : children.entrySet()) {
@@ -221,5 +219,20 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
         } else {
             return node.getValue();
         }
+    }
+
+    private Map<String, List<ImmutableNode>> getChildrenWithName(ImmutableNode node) {
+//        return node.getChildren()
+//                .stream()
+//                .collect(Collectors.groupingBy(ImmutableNode::getNodeName));
+        Map<String, List<ImmutableNode>> children = new HashMap<>();
+        for (ImmutableNode child : node.getChildren()) {
+            String name = child.getNodeName();
+            if (!children.containsKey(name)) {
+                children.put(name, new ArrayList<ImmutableNode>());
+            }
+            children.get(name).add(child);
+        }
+        return children;
     }
 }
