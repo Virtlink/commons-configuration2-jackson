@@ -13,7 +13,7 @@ Configuration 2.
 Add the library as a dependency to your project. In Gradle, add to your `dependencies` block
 
 ```gradle
-compile 'com.virtlink.commons:commons-configuration2-jackson:0.2.0'
+compile 'com.virtlink.commons:commons-configuration2-jackson:0.3.0'
 ```
 
 In Maven, add to your `<dependencies>` tag
@@ -22,7 +22,7 @@ In Maven, add to your `<dependencies>` tag
 <dependency>
     <groupId>com.virtlink.commons</groupId>
     <artifactId>commons-configuration2-jackson</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
@@ -80,7 +80,7 @@ for a solution or workaround, or create a new issue.
 
 
 ## Copyright and License
-Copyright © 2015 - Daniel Pelsmaeker
+Copyright © 2015-2016 - Daniel Pelsmaeker
 
 The code and files in this project are licensed under the
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
