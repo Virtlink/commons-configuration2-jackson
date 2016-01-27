@@ -16,6 +16,10 @@
 
 package com.virtlink.commons.configuration2.jackson;
 
+import org.apache.commons.configuration2.builder.BasicBuilderParameters;
+import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.junit.Test;
 
@@ -156,7 +160,7 @@ public abstract class JacksonConfigurationTests {
      * @return The example configuration string.
      * @throws ConfigurationException
      */
-    protected String getExampleConfiguration() throws ConfigurationException {
+    protected String getExampleConfiguration() throws ConfigurationException, IOException {
         JacksonConfiguration configuration = create();
 
         configuration.setProperty("name", "testName");

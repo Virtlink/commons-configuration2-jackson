@@ -1,0 +1,12 @@
+{
+  "obj" : {
+    "name" : "default",
+    "value" : 0
+  },
+  "someFolder" : "default",
+  "name" : "default",
+  "listOfObjs" : [ {
+    "name" : "default",
+    "value" : 0
+  } ]
+}

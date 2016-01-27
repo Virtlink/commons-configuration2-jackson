@@ -27,6 +27,7 @@ repositories {
 
 dependencies {
     compile 'org.apache.commons:commons-configuration2:2.0-beta2'
+    compile 'commons-beanutils:commons-beanutils:1.9.2'
     compile 'com.fasterxml.jackson.core:jackson-core:2.6.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0'
 
@@ -34,6 +35,7 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.6.0'
+    testCompile 'com.google.guava:guava:19.0'
 }
 
 

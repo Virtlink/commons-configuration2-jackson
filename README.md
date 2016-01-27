@@ -13,7 +13,7 @@ Configuration 2.
 Add the library as a dependency to your project. In Gradle, add to your `dependencies` block
 
 ```gradle
-compile 'com.virtlink.commons:commons-configuration2-jackson:0.3.0'
+compile 'com.virtlink.commons:commons-configuration2-jackson:0.3.1'
 ```
 
 In Maven, add to your `<dependencies>` tag
@@ -22,7 +22,7 @@ In Maven, add to your `<dependencies>` tag
 <dependency>
     <groupId>com.virtlink.commons</groupId>
     <artifactId>commons-configuration2-jackson</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
 </dependency>
 ```
 
@@ -37,14 +37,15 @@ Import the project's namespace.
 import com.virtlink.commons.configuration2.jackson.JsonConfiguration;
 ```
 
-Create a new configuration through one of the configuration builders,
+Create a new configuration through the configuration builder,
 
 ```java
 Parameters params = new Parameters();
-BasicConfigurationBuilder<JsonConfiguration> builder =
-    new BasicConfigurationBuilder<JsonConfiguration>(JsonConfiguration.class)
-        .configure(params.basic());
-JsonConfiguration config = builder.getConfiguration();
+FileBasedConfigurationBuilder<JsonConfiguration> builder
+    = new FileBasedConfigurationBuilder<>(JsonConfiguration.class);
+JsonConfiguration config = builder.configure(params
+     .fileBased()
+     .setFileName("example.json")).getConfiguration();
 ```
 
 or instantiate the configuration class directly.
