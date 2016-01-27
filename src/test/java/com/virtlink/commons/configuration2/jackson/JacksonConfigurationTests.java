@@ -54,65 +54,6 @@ public abstract class JacksonConfigurationTests {
         assertThat(sut.getProperty("emptyList"), is(nullValue()));
     }
 
-    /**
-     * Creates a new {@link JacksonConfiguration} for use in tests.
-     *
-     * @return The created configuration.
-     */
-    protected JacksonConfiguration create() throws ConfigurationException {
-        return create(new HashMap<String, Object>());
-    }
-
-    /**
-     * Returns an example configuration string.
-     * <p>
-     * Override this method to provide an example for the configuration implementation.
-     * <p>
-     * The model must have the following structure:
-     * <p>
-     * <pre>
-     * obj.name: "test"
-     * obj.value: 1
-     * name: "testName"
-     * listOfObjs(0).name: "testname"
-     * listOfObjs(0).value: 4
-     * listOfObjs(1).name: "other"
-     * listOfObjs(1).value: 20
-     * </pre>
-     *
-     * @return The example configuration string.
-     * @throws IOException
-     * @throws ConfigurationException
-     */
-    protected String getExampleConfiguration() throws ConfigurationException {
-        JacksonConfiguration configuration = create();
-
-        configuration.setProperty("name", "testName");
-        configuration.setProperty("obj.name", "test");
-        configuration.setProperty("obj.value", 1);
-        configuration.addProperty("listOfObjs(-1).name", "testname");
-        configuration.addProperty("listOfObjs.value", 4);
-        configuration.addProperty("listOfObjs(-1).name", "other");
-        configuration.addProperty("listOfObjs.value", 20);
-
-        StringWriter writer = new StringWriter();
-        try {
-            configuration.write(writer);
-        } catch (ConfigurationException | IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return writer.toString();
-    }
-
-    /**
-     * Creates a new {@link JacksonConfiguration} for use in tests.
-     *
-     * @param properties The properties in the configuration.
-     * @return The created configuration.
-     */
-    protected abstract JacksonConfiguration create(Map<String, Object> properties) throws ConfigurationException;
-
     @Test
     public void readWriteReadConfiguration() throws IOException, ConfigurationException {
         // Arrange
@@ -133,4 +74,128 @@ public abstract class JacksonConfigurationTests {
         // Assert
         assertThat(str2, is(str3));
     }
+
+    @Test
+    public void configurationWithVariables() throws IOException, ConfigurationException {
+        // Arrange
+        JacksonConfiguration configuration = create();
+        configuration.setProperty("application.groupid", "org.example");
+        configuration.setProperty("application.artifactid", "testapp");
+        configuration.setProperty("application.version", "1.0-alpha");
+        configuration.setProperty("id", "${application.groupid}:${application.artifactid}:${application.version}");
+
+        // Act
+        String id = configuration.getString("id");
+
+        // Assert
+        assertThat(id, is("org.example:testapp:1.0-alpha"));
+    }
+
+    @Test
+    public void readConfigurationWithVariables() throws IOException, ConfigurationException {
+        // Arrange
+        JacksonConfiguration configuration = create();
+        configuration.setProperty("application.groupid", "org.example");
+        configuration.setProperty("application.artifactid", "testapp");
+        configuration.setProperty("application.version", "1.0-alpha");
+        configuration.setProperty("id", "${application.groupid}:${application.artifactid}:${application.version}");
+        String input = asString(configuration);
+
+        // Act
+        JacksonConfiguration sut = create();
+        sut.read(new StringReader(input));
+        String id = sut.getString("id");
+
+        // Assert
+        assertThat(id, is("org.example:testapp:1.0-alpha"));
+    }
+
+    @Test
+    public void readWriteReadConfigurationWithVariables() throws IOException, ConfigurationException {
+        // Arrange
+        JacksonConfiguration configuration = create();
+        configuration.setProperty("application.groupid", "org.example");
+        configuration.setProperty("application.artifactid", "testapp");
+        configuration.setProperty("application.version", "1.0-alpha");
+        configuration.setProperty("id", "${application.groupid}:${application.artifactid}:${application.version}");
+        String input = asString(configuration);
+
+        JacksonConfiguration sut = create();
+        sut.read(new StringReader(input));
+        String str2 = asString(sut);
+        JacksonConfiguration sut2 = create();
+        sut2.read(new StringReader(str2));
+        String str3 = asString(sut2);
+
+        // Act
+        JacksonConfiguration sut3 = create();
+        sut3.read(new StringReader(str3));
+        String id = sut3.getString("id");
+
+        // Assert
+        assertThat(id, is("org.example:testapp:1.0-alpha"));
+    }
+
+    /**
+     * Returns an example configuration string.
+     * <p>
+     * Override this method to provide an example for the configuration implementation.
+     * <p>
+     * The model must have the following structure:
+     * <p>
+     * <pre>
+     * obj.name: "test"
+     * obj.value: 1
+     * name: "testName"
+     * listOfObjs(0).name: "testname"
+     * listOfObjs(0).value: 4
+     * listOfObjs(1).name: "other"
+     * listOfObjs(1).value: 20
+     * </pre>
+     *
+     * @return The example configuration string.
+     * @throws ConfigurationException
+     */
+    protected String getExampleConfiguration() throws ConfigurationException {
+        JacksonConfiguration configuration = create();
+
+        configuration.setProperty("name", "testName");
+        configuration.setProperty("obj.name", "test");
+        configuration.setProperty("obj.value", 1);
+        configuration.addProperty("listOfObjs(-1).name", "testname");
+        configuration.addProperty("listOfObjs.value", 4);
+        configuration.addProperty("listOfObjs(-1).name", "other");
+        configuration.addProperty("listOfObjs.value", 20);
+
+        return asString(configuration);
+    }
+
+    protected String asString(JacksonConfiguration configuration) {
+        StringWriter writer = new StringWriter();
+        try {
+            configuration.write(writer);
+        } catch (ConfigurationException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return writer.toString();
+    }
+
+    /**
+     * Creates a new {@link JacksonConfiguration} for use in tests.
+     *
+     * @return The created configuration.
+     */
+    protected JacksonConfiguration create() throws ConfigurationException {
+        return create(new HashMap<String, Object>());
+    }
+
+    /**
+     * Creates a new {@link JacksonConfiguration} for use in tests.
+     *
+     * @param properties The properties in the configuration.
+     * @return The created configuration.
+     */
+    protected abstract JacksonConfiguration create(Map<String, Object> properties) throws ConfigurationException;
+
 }
