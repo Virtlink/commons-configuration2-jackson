@@ -1,0 +1,5 @@
+<configuration>
+    <!-- From high to low priority -->
+    <json fileName="example.json" />
+    <json fileName="default.json" />
+</configuration>

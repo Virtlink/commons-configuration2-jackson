@@ -1,0 +1,14 @@
+{
+  "obj" : {
+    "name" : "test",
+    "value" : 1
+  },
+  "name" : "testName",
+  "listOfObjs" : [ {
+    "name" : "testname",
+    "value" : 4
+  }, {
+    "name" : "other",
+    "value" : 20
+  } ]
+}

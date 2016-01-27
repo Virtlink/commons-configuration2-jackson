@@ -16,17 +16,26 @@
 
 package com.virtlink.commons.configuration2.jackson;
 
-import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+import org.apache.commons.configuration2.CombinedConfiguration;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.combined.CombinedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.combined.ConfigurationBuilderProvider;
+import org.apache.commons.configuration2.builder.fluent.CombinedBuilderParameters;
+import org.apache.commons.configuration2.builder.fluent.FileBasedBuilderParameters;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.URL;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 public final class JsonConfigurationTests extends JacksonConfigurationTests {
 
@@ -36,21 +45,9 @@ public final class JsonConfigurationTests extends JacksonConfigurationTests {
     }
 
     @Override
-    protected String getExampleConfiguration() throws ConfigurationException {
-        return "{\n"
-                + "  \"obj\" : {\n"
-                + "    \"name\" : \"test\",\n"
-                + "    \"value\" : 1\n"
-                + "  },\n"
-                + "  \"name\" : \"testName\",\n"
-                + "  \"listOfObjs\" : [ {\n"
-                + "    \"name\" : \"testname\",\n"
-                + "    \"value\" : 4\n"
-                + "  }, {\n"
-                + "    \"name\" : \"other\",\n"
-                + "    \"value\" : 20\n"
-                + "  } ]\n"
-                + "}";
+    protected String getExampleConfiguration() throws ConfigurationException, IOException {
+        URL url = Resources.getResource("example.json");
+        return Resources.toString(url, Charsets.UTF_8);
     }
 
     @Test
@@ -81,6 +78,54 @@ public final class JsonConfigurationTests extends JacksonConfigurationTests {
 
         // Assert
         assertThat(sut.getProperty("nullValue"), is(nullValue()));
+    }
+
+    @Test
+    public void readFromBuilder() throws ConfigurationException {
+        // Arrange
+        FileBasedBuilderParameters params = new Parameters()
+                .fileBased()
+                .setThrowExceptionOnMissing(true)
+                .setEncoding("UTF-8")
+                .setFileName(Resources.getResource("example.json").toString());
+
+        // Act
+        FileBasedConfigurationBuilder<JsonConfiguration> builder = new FileBasedConfigurationBuilder<>(
+                JsonConfiguration.class);
+        JsonConfiguration sut = builder.configure(params).getConfiguration();
+
+        // Assert
+        assertThat(sut.getString("name"), is("testName"));
+    }
+
+    @Test
+    public void readCombinedConfig() throws ConfigurationException {
+        // Arrange
+        ConfigurationBuilderProvider provider = new JacksonConfigurationBuilderProvider<>(JsonConfiguration.class);
+
+        Parameters params = new Parameters();
+        final CombinedBuilderParameters combinedBuilderParameters = params.combined()
+                .setDefinitionBuilderParameters(
+                        params.fileBased().setFileName(Resources.getResource("combined.xml").toString())
+                )
+                .registerProvider("json", provider);
+
+        // Act
+        CombinedConfigurationBuilder builder = new CombinedConfigurationBuilder();
+        CombinedConfiguration sut = builder.configure(combinedBuilderParameters).getConfiguration();
+
+        // Assert
+        assertThat(sut.getString("someFolder"), is("default"));
+        assertThat(sut.getString("name"), is("testName"));
+        assertThat(sut.getString("obj.name"), is("test"));
+        assertThat(sut.getInt("obj.value"), is(1));
+        assertThat(sut.getString("listOfObjs(0).name"), is("testname"));
+        assertThat(sut.getInt("listOfObjs(0).value"), is(4));
+        assertThat(sut.getString("listOfObjs(1).name"), is("other"));
+        assertThat(sut.getInt("listOfObjs(1).value"), is(20));
+        assertThat(sut.getStringArray("listOfObjs.name"), is(new String[]{"testname", "other"}));
+        assertThat(sut.getProperty("nullValue"), is(nullValue()));
+        assertThat(sut.getProperty("emptyList"), is(nullValue()));
     }
 
 }
