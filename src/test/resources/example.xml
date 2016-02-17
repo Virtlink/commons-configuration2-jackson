@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<testconfig>
+    <obj>
+        <name>test</name>
+        <value>1</value>
+    </obj>
+    <name>testName</name>
+    <listOfObjs>
+        <name>testname</name>
+        <value>4</value>
+    </listOfObjs>
+    <listOfObjs>
+        <name>other</name>
+        <value>20</value>
+    </listOfObjs>
+    <listOfComplexObjs>
+        <someObj>
+            <name>a name</name>
+            <value>20</value>
+        </someObj>
+    </listOfComplexObjs>
+    <listOfComplexObjs>
+        <someObj>
+            <name>another name</name>
+            <value>40</value>
+        </someObj>
+    </listOfComplexObjs>
+</testconfig>

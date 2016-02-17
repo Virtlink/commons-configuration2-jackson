@@ -28,7 +28,7 @@ package com.virtlink.commons.configuration2.jackson;
      * @return The reference.
      * @throws NullPointerException
      */
-    public static <T> T checkNotNull(T reference) {
+    public static <T> T checkNotNull(final T reference) {
         if (reference == null) {
             throw new NullPointerException();
         }

@@ -37,26 +37,26 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public final class JsonConfigurationTests extends JacksonConfigurationTests {
+public final class JsonConfigurationTests extends ConfigurationTests<JsonConfiguration> {
 
     @Override
-    protected JsonConfiguration create(Map<String, Object> properties) throws ConfigurationException {
+    protected JsonConfiguration create(final Map<String, Object> properties) throws ConfigurationException {
         return new JsonConfiguration();
     }
 
     @Override
     protected String getExampleConfiguration() throws ConfigurationException, IOException {
-        URL url = Resources.getResource("example.json");
+        final URL url = Resources.getResource("example.json");
         return Resources.toString(url, Charsets.UTF_8);
     }
 
     @Test
     public void emptyArrayIsIgnored() throws IOException, ConfigurationException {
         // Arrange
-        String input = "{\n"
+        final String input = "{\n"
                 + "\"emptyArray\" : []\n"
                 + "}";
-        JsonConfiguration sut = new JsonConfiguration();
+        final JsonConfiguration sut = new JsonConfiguration();
 
         // Act
         sut.read(new StringReader(input));
@@ -68,10 +68,10 @@ public final class JsonConfigurationTests extends JacksonConfigurationTests {
     @Test
     public void nullIsIgnored() throws IOException, ConfigurationException {
         // Arrange
-        String input = "{\n"
+        final String input = "{\n"
                 + "\"nullValue\" : null\n"
                 + "}";
-        JsonConfiguration sut = new JsonConfiguration();
+        final JsonConfiguration sut = new JsonConfiguration();
 
         // Act
         sut.read(new StringReader(input));
@@ -83,16 +83,16 @@ public final class JsonConfigurationTests extends JacksonConfigurationTests {
     @Test
     public void readFromBuilder() throws ConfigurationException {
         // Arrange
-        FileBasedBuilderParameters params = new Parameters()
+        final FileBasedBuilderParameters params = new Parameters()
                 .fileBased()
                 .setThrowExceptionOnMissing(true)
                 .setEncoding("UTF-8")
                 .setFileName(Resources.getResource("example.json").toString());
 
         // Act
-        FileBasedConfigurationBuilder<JsonConfiguration> builder = new FileBasedConfigurationBuilder<>(
+        final FileBasedConfigurationBuilder<JsonConfiguration> builder = new FileBasedConfigurationBuilder<>(
                 JsonConfiguration.class);
-        JsonConfiguration sut = builder.configure(params).getConfiguration();
+        final JsonConfiguration sut = builder.configure(params).getConfiguration();
 
         // Assert
         assertThat(sut.getString("name"), is("testName"));
@@ -101,9 +101,9 @@ public final class JsonConfigurationTests extends JacksonConfigurationTests {
     @Test
     public void readCombinedConfig() throws ConfigurationException {
         // Arrange
-        ConfigurationBuilderProvider provider = new JacksonConfigurationBuilderProvider<>(JsonConfiguration.class);
+        final ConfigurationBuilderProvider provider = new JacksonConfigurationBuilderProvider<>(JsonConfiguration.class);
 
-        Parameters params = new Parameters();
+        final Parameters params = new Parameters();
         final CombinedBuilderParameters combinedBuilderParameters = params.combined()
                 .setDefinitionBuilderParameters(
                         params.fileBased().setFileName(Resources.getResource("combined.xml").toString())
@@ -111,8 +111,8 @@ public final class JsonConfigurationTests extends JacksonConfigurationTests {
                 .registerProvider("json", provider);
 
         // Act
-        CombinedConfigurationBuilder builder = new CombinedConfigurationBuilder();
-        CombinedConfiguration sut = builder.configure(combinedBuilderParameters).getConfiguration();
+        final CombinedConfigurationBuilder builder = new CombinedConfigurationBuilder();
+        final CombinedConfiguration sut = builder.configure(combinedBuilderParameters).getConfiguration();
 
         // Assert
         assertThat(sut.getString("someFolder"), is("default"));

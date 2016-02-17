@@ -16,11 +16,10 @@
 
 package com.virtlink.commons.configuration2.jackson;
 
-import org.apache.commons.configuration2.builder.BasicBuilderParameters;
-import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.io.FileBased;
+import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -29,21 +28,39 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
-public abstract class JacksonConfigurationTests {
+public abstract class ConfigurationTests<T extends FileBased & HierarchicalConfiguration<ImmutableNode>> {
+
+    /**
+     * Creates a new configuration for use in tests.
+     *
+     * @return The created configuration.
+     */
+    protected T create() throws ConfigurationException {
+        return create(new HashMap<String, Object>());
+    }
+
+    /**
+     * Creates a new configuration for use in tests.
+     *
+     * @param properties The properties in the configuration.
+     * @return The created configuration.
+     */
+    protected abstract T create(Map<String, Object> properties) throws ConfigurationException;
 
     @Test
     public void readConfiguration() throws IOException, ConfigurationException {
         // Arrange
-        JacksonConfiguration sut = create();
-        String input = getExampleConfiguration();
+        final T sut = create();
+        final String input = getExampleConfiguration();
 
         // Act
-        StringReader reader = new StringReader(input);
+        final StringReader reader = new StringReader(input);
         sut.read(reader);
+
+        final HierarchicalConfiguration<ImmutableNode> objs = sut.configurationAt("listOfObjs(0)", true);
 
         // Assert
         assertThat(sut.getString("name"), is("testName"));
@@ -56,24 +73,28 @@ public abstract class JacksonConfigurationTests {
         assertThat(sut.getStringArray("listOfObjs.name"), is(new String[]{"testname", "other"}));
         assertThat(sut.getProperty("nullValue"), is(nullValue()));
         assertThat(sut.getProperty("emptyList"), is(nullValue()));
+        assertThat(sut.getString("listOfComplexObjs(0).someObj.name"), is("a name"));
+        assertThat(sut.getInt("listOfComplexObjs(0).someObj.value"), is(20));
+        assertThat(sut.getString("listOfComplexObjs(1).someObj.name"), is("another name"));
+        assertThat(sut.getInt("listOfComplexObjs(1).someObj.value"), is(40));
     }
 
     @Test
     public void readWriteReadConfiguration() throws IOException, ConfigurationException {
         // Arrange
-        String str = getExampleConfiguration();
-        JacksonConfiguration config = create();
+        final String str = getExampleConfiguration();
+        final T config = create();
         config.read(new StringReader(str));
-        StringWriter writer = new StringWriter();
+        final StringWriter writer = new StringWriter();
         config.write(writer);
-        String str2 = writer.toString();
+        final String str2 = writer.toString();
 
         // Act
-        JacksonConfiguration config2 = create();
+        final T config2 = create();
         config2.read(new StringReader(str2));
-        StringWriter writer2 = new StringWriter();
+        final StringWriter writer2 = new StringWriter();
         config.write(writer2);
-        String str3 = writer2.toString();
+        final String str3 = writer2.toString();
 
         // Assert
         assertThat(str2, is(str3));
@@ -82,14 +103,14 @@ public abstract class JacksonConfigurationTests {
     @Test
     public void configurationWithVariables() throws IOException, ConfigurationException {
         // Arrange
-        JacksonConfiguration configuration = create();
+        final T configuration = create();
         configuration.setProperty("application.groupid", "org.example");
         configuration.setProperty("application.artifactid", "testapp");
         configuration.setProperty("application.version", "1.0-alpha");
         configuration.setProperty("id", "${application.groupid}:${application.artifactid}:${application.version}");
 
         // Act
-        String id = configuration.getString("id");
+        final String id = configuration.getString("id");
 
         // Assert
         assertThat(id, is("org.example:testapp:1.0-alpha"));
@@ -98,17 +119,17 @@ public abstract class JacksonConfigurationTests {
     @Test
     public void readConfigurationWithVariables() throws IOException, ConfigurationException {
         // Arrange
-        JacksonConfiguration configuration = create();
+        final T configuration = create();
         configuration.setProperty("application.groupid", "org.example");
         configuration.setProperty("application.artifactid", "testapp");
         configuration.setProperty("application.version", "1.0-alpha");
         configuration.setProperty("id", "${application.groupid}:${application.artifactid}:${application.version}");
-        String input = asString(configuration);
+        final String input = asString(configuration);
 
         // Act
-        JacksonConfiguration sut = create();
+        final T sut = create();
         sut.read(new StringReader(input));
-        String id = sut.getString("id");
+        final String id = sut.getString("id");
 
         // Assert
         assertThat(id, is("org.example:testapp:1.0-alpha"));
@@ -117,24 +138,24 @@ public abstract class JacksonConfigurationTests {
     @Test
     public void readWriteReadConfigurationWithVariables() throws IOException, ConfigurationException {
         // Arrange
-        JacksonConfiguration configuration = create();
+        final T configuration = create();
         configuration.setProperty("application.groupid", "org.example");
         configuration.setProperty("application.artifactid", "testapp");
         configuration.setProperty("application.version", "1.0-alpha");
         configuration.setProperty("id", "${application.groupid}:${application.artifactid}:${application.version}");
-        String input = asString(configuration);
+        final String input = asString(configuration);
 
-        JacksonConfiguration sut = create();
+        final T sut = create();
         sut.read(new StringReader(input));
-        String str2 = asString(sut);
-        JacksonConfiguration sut2 = create();
+        final String str2 = asString(sut);
+        final T sut2 = create();
         sut2.read(new StringReader(str2));
-        String str3 = asString(sut2);
+        final String str3 = asString(sut2);
 
         // Act
-        JacksonConfiguration sut3 = create();
+        final T sut3 = create();
         sut3.read(new StringReader(str3));
-        String id = sut3.getString("id");
+        final String id = sut3.getString("id");
 
         // Assert
         assertThat(id, is("org.example:testapp:1.0-alpha"));
@@ -155,13 +176,17 @@ public abstract class JacksonConfigurationTests {
      * listOfObjs(0).value: 4
      * listOfObjs(1).name: "other"
      * listOfObjs(1).value: 20
+     * listOfComplexObjs(0).someObj.name: "a name"
+     * listOfComplexObjs(0).someObj.value: 20
+     * listOfComplexObjs(1).someObj.name: "another name"
+     * listOfComplexObjs(1).someObj.value: 40
      * </pre>
      *
      * @return The example configuration string.
      * @throws ConfigurationException
      */
     protected String getExampleConfiguration() throws ConfigurationException, IOException {
-        JacksonConfiguration configuration = create();
+        final T configuration = create();
 
         configuration.setProperty("name", "testName");
         configuration.setProperty("obj.name", "test");
@@ -170,12 +195,16 @@ public abstract class JacksonConfigurationTests {
         configuration.addProperty("listOfObjs.value", 4);
         configuration.addProperty("listOfObjs(-1).name", "other");
         configuration.addProperty("listOfObjs.value", 20);
+        configuration.addProperty("listOfComplexObjs(-1).someObj.name", "a name");
+        configuration.addProperty("listOfComplexObjs.someObj.value", 20);
+        configuration.addProperty("listOfComplexObjs(-1).someObj.name", "another name");
+        configuration.addProperty("listOfComplexObjs.someObj.value", 40);
 
         return asString(configuration);
     }
 
-    protected String asString(JacksonConfiguration configuration) {
-        StringWriter writer = new StringWriter();
+    protected String asString(final T configuration) {
+        final StringWriter writer = new StringWriter();
         try {
             configuration.write(writer);
         } catch (ConfigurationException | IOException e) {
@@ -184,22 +213,5 @@ public abstract class JacksonConfigurationTests {
 
         return writer.toString();
     }
-
-    /**
-     * Creates a new {@link JacksonConfiguration} for use in tests.
-     *
-     * @return The created configuration.
-     */
-    protected JacksonConfiguration create() throws ConfigurationException {
-        return create(new HashMap<String, Object>());
-    }
-
-    /**
-     * Creates a new {@link JacksonConfiguration} for use in tests.
-     *
-     * @param properties The properties in the configuration.
-     * @return The created configuration.
-     */
-    protected abstract JacksonConfiguration create(Map<String, Object> properties) throws ConfigurationException;
 
 }
