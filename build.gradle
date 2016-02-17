@@ -35,7 +35,7 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.6.0'
-    testCompile 'com.google.guava:guava:19.0'
+    testCompile 'com.google.guava:guava:17.0'
 }
 
 

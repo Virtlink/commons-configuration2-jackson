@@ -16,25 +16,28 @@
 
 package com.virtlink.commons.configuration2.jackson;
 
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
+import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.io.FileLocatorUtils;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
-public final class YamlConfigurationTests extends ConfigurationTests<JacksonConfiguration> {
+public final class BuiltInXmlConfigurationTests extends ConfigurationTests<XMLConfiguration> {
 
     @Override
-    protected JacksonConfiguration create(final Map<String, Object> properties) throws ConfigurationException {
-        return new JacksonConfiguration(new YAMLFactory()) {};
+    protected XMLConfiguration create(final Map<String, Object> properties) throws ConfigurationException {
+        final XMLConfiguration configuration = new XMLConfiguration();
+        configuration.initFileLocator(FileLocatorUtils.fileLocator().create());
+        return configuration;
     }
 
     @Override
     protected String getExampleConfiguration() throws ConfigurationException, IOException {
-        final URL url = Resources.getResource("example.yaml");
+        final URL url = Resources.getResource("example.xml");
         return Resources.toString(url, Charsets.UTF_8);
     }
 }

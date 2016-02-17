@@ -103,8 +103,8 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     public void read(final Reader reader) throws ConfigurationException, IOException {
         Preconditions.checkNotNull(reader);
 
-        HashMap<String, Object> settings = this.mapper.readValue(reader, HASH_MAP_TYPE_REFERENCE);
-        ImmutableNode rootNode = toNodes(null, settings).iterator().next();
+        final HashMap<String, Object> settings = this.mapper.readValue(reader, HASH_MAP_TYPE_REFERENCE);
+        final ImmutableNode rootNode = toNode(new Builder(), settings);
         this.getSubConfigurationParentModel().mergeRoot(rootNode, null, null, null, this);
     }
 
@@ -119,7 +119,7 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     public void write(final Writer writer) throws ConfigurationException, IOException {
         Preconditions.checkNotNull(writer);
 
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked") final
         HashMap<String, Object> settings = (HashMap<String, Object>) fromNode(this.getModel().getInMemoryRepresentation());
         this.mapper.writerWithDefaultPrettyPrinter().writeValue(writer, settings);
     }
@@ -135,56 +135,75 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     }
 
     /**
-     * Gets a node from a serialization object.
+     * Creates a node for the specified object.
      *
-     * @param name The name of the node.
-     * @param tree The tree of values.
-     * @return A node representing the tree.
+     * @param builder The node builder.
+     * @param obj The object.
+     * @return The created node.
      */
-    private Collection<ImmutableNode> toNodes(String name, Map<String, Object> tree) {
-        Builder builder = new Builder();
-        if (name != null)
-            builder.name(name);
-        for (Map.Entry<String, Object> entry : tree.entrySet()) {
-            Collection<ImmutableNode> nodes = toNodes(entry.getKey(), entry.getValue());
-            builder.addChildren(nodes);
-        }
-        return Collections.singletonList(builder.create());
-    }
+    private ImmutableNode toNode(final Builder builder, final Object obj) {
+        assert !(obj instanceof List);
 
-    /**
-     * Gets a node from a serialization object.
-     *
-     * @param name The name of the node.
-     * @param list The list of values.
-     * @return All the nodes representing the objects in the list.
-     */
-    private Collection<ImmutableNode> toNodes(String name, List<Object> list) {
-        ArrayList<ImmutableNode> nodes = new ArrayList<>();
-        for (Object value : list) {
-            Collection<ImmutableNode> children = toNodes(name, value);
-            nodes.addAll(children);
-        }
-        return nodes;
-    }
-
-    /**
-     * Gets a node from a serialization object.
-     *
-     * @param name  The name of the node.
-     * @param value The value of the node.
-     * @return A single node representing the object.
-     */
-    private Collection<ImmutableNode> toNodes(String name, Object value) {
-        if (value == null) {
-            return Collections.emptyList();
-        } else if (value instanceof Map) {
-            return toNodes(name, (Map<String, Object>) value);
-        } else if (value instanceof List) {
-            return toNodes(name, (List<Object>) value);
+        if (obj instanceof Map) {
+            return mapToNode(builder, (Map<String, Object>) obj);
         } else {
-            return Collections.singletonList(new Builder().name(name).value(value).create());
+            return valueToNode(builder, obj);
         }
+    }
+
+    /**
+     * Creates a node for the specified map.
+     *
+     * @param builder The node builder.
+     * @param map The map.
+     * @return The created node.
+     */
+    private ImmutableNode mapToNode(final Builder builder, final Map<String, Object> map) {
+        for (final Map.Entry<String, Object> entry : map.entrySet()) {
+            final String key = entry.getKey();
+            final Object value = entry.getValue();
+            if (value instanceof List) {
+                // For a list, add each list item as a child of this node.
+                for (final Object item : (List)value) {
+                    addChildNode(builder, key, item);
+                }
+            } else {
+                // Otherwise, add the value as a child of this node.
+                addChildNode(builder, key, value);
+            }
+        }
+        return builder.create();
+    }
+
+    /**
+     * Adds a child node to the specified builder.
+     *
+     * @param builder The builder to add the node to.
+     * @param name The name of the node.
+     * @param value The value of the node.
+     */
+    private void addChildNode(final Builder builder, final String name, final Object value) {
+        assert !(value instanceof List);
+
+        final Builder childBuilder = new Builder();
+        // Set the name of the child node.
+        childBuilder.name(name);
+        // Set the value of the child node.
+        final ImmutableNode childNode = toNode(childBuilder, value);
+        // Add the node to the children of the node being built.
+        builder.addChild(childNode);
+    }
+
+    /**
+     * Creates a node for the specified value.
+     *
+     * @param builder The node builder.
+     * @param value The value.
+     * @return The created node.
+     */
+    private ImmutableNode valueToNode(final Builder builder, final Object value) {
+        // Set the value of the node being built.
+        return builder.value(value).create();
     }
 
     /**
@@ -193,23 +212,23 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
      * @param node The node.
      * @return The object representing the node.
      */
-    private Object fromNode(ImmutableNode node) {
+    private Object fromNode(final ImmutableNode node) {
         if (!node.getChildren().isEmpty()) {
-            Map<String, List<ImmutableNode>> children = getChildrenWithName(node);
+            final Map<String, List<ImmutableNode>> children = getChildrenWithName(node);
 
-            HashMap<String, Object> map = new HashMap<>();
-            for (Map.Entry<String, List<ImmutableNode>> entry : children.entrySet()) {
-                assert entry.getValue().size() > 0;
+            final HashMap<String, Object> map = new HashMap<>();
+            for (final Map.Entry<String, List<ImmutableNode>> entry : children.entrySet()) {
+                assert !entry.getValue().isEmpty();
                 if (entry.getValue().size() == 1) {
                     // Just one node.
-                    ImmutableNode child = entry.getValue().get(0);
-                    Object childValue = fromNode(child);
+                    final ImmutableNode child = entry.getValue().get(0);
+                    final Object childValue = fromNode(child);
                     map.put(entry.getKey(), childValue);
                 } else {
                     // Multiple nodes.
-                    ArrayList<Object> list = new ArrayList<>();
-                    for (ImmutableNode child : entry.getValue()) {
-                        Object childValue = fromNode(child);
+                    final ArrayList<Object> list = new ArrayList<>();
+                    for (final ImmutableNode child : entry.getValue()) {
+                        final Object childValue = fromNode(child);
                         list.add(childValue);
                     }
                     map.put(entry.getKey(), list);
@@ -221,13 +240,10 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
         }
     }
 
-    private Map<String, List<ImmutableNode>> getChildrenWithName(ImmutableNode node) {
-//        return node.getChildren()
-//                .stream()
-//                .collect(Collectors.groupingBy(ImmutableNode::getNodeName));
-        Map<String, List<ImmutableNode>> children = new HashMap<>();
-        for (ImmutableNode child : node.getChildren()) {
-            String name = child.getNodeName();
+    private Map<String, List<ImmutableNode>> getChildrenWithName(final ImmutableNode node) {
+        final Map<String, List<ImmutableNode>> children = new HashMap<>();
+        for (final ImmutableNode child : node.getChildren()) {
+            final String name = child.getNodeName();
             if (!children.containsKey(name)) {
                 children.put(name, new ArrayList<ImmutableNode>());
             }
