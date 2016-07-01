@@ -33,6 +33,8 @@ dependencies {
     testCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.7.5'
     testCompile 'org.yaml:snakeyaml:1.17' // upgrade 1.15 dependency of jackson-dataformat-yaml
     testCompile 'com.google.guava:guava:18.0'
+    testCompile 'commons-beanutils:commons-beanutils:1.9.2'
+    testCompile 'commons-collections:commons-collections:3.2.2' // upgrade 3.2.1 dependency of commons-collections (http://www.kb.cert.org/vuls/id/576313)
 }
 
 
