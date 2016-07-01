@@ -2,6 +2,10 @@
 This lists the most notable changes between releases of this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.0
+
+* Updated and removed some dependencies.
+
 ## 0.5.0
 
 * Changed dependency to commons-configuration2 2.0 on Maven Central.
