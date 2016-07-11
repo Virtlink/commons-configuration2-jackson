@@ -38,6 +38,7 @@ configurations.all {
     resolutionStrategy {
         failOnVersionConflict()
 
+        force 'org.apache.commons:commons-lang3:3.4' // updgrade 3.3.2 dependency of commons-configuration2
         force 'com.fasterxml.jackson.core:jackson-annotations:2.7.5' // upgrade 2.7.0 dependency of jackson-databind
         force 'org.yaml:snakeyaml:1.17' // upgrade 1.15 dependency of jackson-dataformat-yaml
         force 'commons-collections:commons-collections:3.2.2' // upgrade 3.2.1 dependency of commons-collections (http://www.kb.cert.org/vuls/id/576313)
