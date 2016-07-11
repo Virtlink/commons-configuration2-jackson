@@ -24,19 +24,34 @@ repositories {
 
 dependencies {
     compile 'org.apache.commons:commons-configuration2:2.0'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.5'
+    compile ('com.fasterxml.jackson.core:jackson-databind:2.7.5') {
+        exclude group: 'com.fasterxml.jackson.core', module: 'jackson-annotations'
+    }
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.5' // upgrade 2.7.0 dependency of jackson-databind
 
     provided 'com.google.code.findbugs:findbugs:3.0.1'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.7.5'
+
+    testCompile ('com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.7.5') {
+        exclude group: 'org.yaml', module: 'snakeyaml'
+    }
     testCompile 'org.yaml:snakeyaml:1.17' // upgrade 1.15 dependency of jackson-dataformat-yaml
+
     testCompile 'com.google.guava:guava:18.0'
-    testCompile 'commons-beanutils:commons-beanutils:1.9.2'
+
+    testCompile ('commons-beanutils:commons-beanutils:1.9.2') {
+        exclude group: 'commons-logging', module: 'commons-logging' // conflicts with commons-configuration2
+        exclude group: 'commons-collections', module: 'commons-collections'
+    }
     testCompile 'commons-collections:commons-collections:3.2.2' // upgrade 3.2.1 dependency of commons-collections (http://www.kb.cert.org/vuls/id/576313)
 }
 
+configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+    }
+}
 
 sourceSets.main.compileClasspath += configurations.provided
 idea.module.scopes.PROVIDED.plus += [configurations.provided]
