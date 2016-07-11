@@ -2,6 +2,10 @@
 This lists the most notable changes between releases of this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.6.1
+
+* Fixed some transitive dependencies.
+
 ## 0.6.0
 
 * Updated and removed some dependencies.
