@@ -5,7 +5,7 @@
 [![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE)
 
 # Jackson for Commons Configuration 2
-This project adds support for FasterXML's Jackson to Apache Commons Configuration 2.
+This project adds support for FasterXML's Jackson to [Apache Commons Configuration 2](https://commons.apache.org/proper/commons-configuration/).
 
 
 ## Installation
