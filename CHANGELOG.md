@@ -2,6 +2,10 @@
 This lists the most notable changes between releases of this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.7.0
+
+* Updateed some dependencies to their latest versions.
+
 ## 0.6.1
 
 * Fixed some transitive dependencies.
@@ -23,21 +27,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Added `JacksonConfigurationBuilderProvider` for combined configurations.
 * More tests.
 
-
 ## 0.3.0
 
 * Changed dependencies.
-
 
 ## 0.2.0
 
 * Now compatible with Java 7 (was Java 8).
 
-
 ## 0.1.4
 
 * First release on BinTray and Maven Central.
-
 
 ## 0.1.0
 
