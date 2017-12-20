@@ -20,15 +20,7 @@ gradle-app.setting
 *.iml
 *.ipr
 *.iws
-.idea/libraries/
-.idea/dictionaries/
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/dataSources.xml
-.idea/dataSources.ids
-.idea/sqlDataSources.xml
-.idea/dynamic.xml
-.idea/uiDesigner.xml
+.idea/
 out/
 atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
