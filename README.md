@@ -1,6 +1,6 @@
 [![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson.svg)](https://travis-ci.org/Virtlink/commons-configuration2-jackson)
 [![GitHub version](https://badge.fury.io/gh/Virtlink%2Fcommons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
-[![Bintray](https://img.shields.io/bintray/v/virtlink/maven/commons-configuration2-jackson.svg)](https://bintray.com/virtlink/maven/commons-configuration2-jackson)
+[![Bintray](https://api.bintray.com/packages/virtlink/maven/commons-configuration2-jackson/images/download.svg)](https://bintray.com/virtlink/maven/commons-configuration2-jackson/_latestVersion)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson)
 [![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE)
 
