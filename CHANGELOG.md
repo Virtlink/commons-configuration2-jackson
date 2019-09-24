@@ -2,9 +2,13 @@
 This lists the most notable changes between releases of this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.8.0
+
+* Updated dependencies to their latest versions.
+
 ## 0.7.0
 
-* Updateed some dependencies to their latest versions.
+* Updated some dependencies to their latest versions.
 
 ## 0.6.1
 
