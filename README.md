@@ -12,7 +12,7 @@ This project adds support for FasterXML's Jackson to [Apache Commons Configurati
 Add the library as a dependency to your project. In Gradle, add to your `dependencies` block
 
 ```gradle
-compile 'com.virtlink.commons:commons-configuration2-jackson:0.7.0'
+compile 'com.virtlink.commons:commons-configuration2-jackson:0.8.0'
 ```
 
 In Maven, add to your `<dependencies>` tag
@@ -86,7 +86,7 @@ for a solution or workaround, or create a new issue.
 
 
 ## Copyright and License
-Copyright © 2015-2016 - Daniel Pelsmaeker
+Copyright © 2015-2019 - Daniel Pelsmaeker
 
 The code and files in this project are licensed under the [Apache License, Version 2.0][4].
 You may use the files in this project in compliance with the license.
