@@ -3,7 +3,7 @@ plugins {
     id "idea"
     id "eclipse"
     id "maven-publish"
-    id "com.jfrog.bintray" version "1.8.0"
+    id "com.jfrog.bintray" version "1.8.4"
 }
 apply from: 'properties.gradle'
 
@@ -23,22 +23,22 @@ repositories {
 
 
 dependencies {
-    compile 'org.apache.commons:commons-configuration2:2.2'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.3'
+    compile 'org.apache.commons:commons-configuration2:2.6'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.9'
 
     provided 'com.google.code.findbugs:findbugs:3.0.1'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.3'
-    testCompile 'com.google.guava:guava:23.5-jre'
-    testCompile 'commons-beanutils:commons-beanutils:1.9.3'
+    testCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.9'
+    testCompile 'com.google.guava:guava:28.1-jre'
+    testCompile 'commons-beanutils:commons-beanutils:1.9.4'
 }
 
 configurations.all {
     resolutionStrategy {
         failOnVersionConflict()
 
-        force 'com.fasterxml.jackson.core:jackson-annotations:2.9.3' // upgrade 2.9.0 dependency of jackson-databind
+        force 'com.fasterxml.jackson.core:jackson-annotations:2.9.9' // upgrade 2.9.0 dependency of jackson-databind
     }
 }
 
