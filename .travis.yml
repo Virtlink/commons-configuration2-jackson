@@ -3,7 +3,7 @@ jdk:
 - openjdk8
 
 script:
-- gradle build
+- ./gradlew build
 
 deploy:
 - provider: releases
@@ -17,7 +17,7 @@ deploy:
     branch: master
     tags: true
 - provider: script
-  script: gradle bintrayUpload
+  script: ./gradlew bintrayUpload
   skip_cleanup: true
   on:
     repo: Virtlink/commons-configuration2-jackson
