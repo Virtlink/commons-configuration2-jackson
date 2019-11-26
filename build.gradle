@@ -1,7 +1,5 @@
 plugins {
-    id "java"
-    id "idea"
-    id "eclipse"
+    id "java-library"
     id "maven-publish"
     id "com.jfrog.bintray" version "1.8.4"
 }
