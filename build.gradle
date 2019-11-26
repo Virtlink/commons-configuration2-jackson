@@ -28,25 +28,9 @@ dependencies {
     testImplementation "commons-beanutils:commons-beanutils:$beanutilsVersion"
 }
 
-configurations.all {
-    resolutionStrategy {
-        failOnVersionConflict()
-
-        force 'com.fasterxml.jackson.core:jackson-annotations:2.9.9' // upgrade 2.9.0 dependency of jackson-databind
-    }
-}
-
-
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
+java {
+    withJavadocJar()
+    withSourcesJar()
 
 
 def pomConfig = {
