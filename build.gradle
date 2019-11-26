@@ -29,45 +29,37 @@ dependencies {
 java {
     withJavadocJar()
     withSourcesJar()
-
-
-def pomConfig = {
-    scm {
-        url scm_url
-        connection scm_connection
-        developerConnection scm_devconnection
-    }
-    licenses {
-        license {
-            name license_id
-            url license_url
-            distribution license_distribution
-        }
-    }
-    developers {
-        developer {
-            name developer_name
-            id developer_id
-            email developer_email
-        }
-    }
 }
-
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifact sourcesJar
-            artifact javadocJar
 
-            pom.withXml {
-                def root = asNode()
-                root.appendNode 'name', project.project_name
-                root.appendNode 'description', project.project_description
-                root.appendNode 'url', project.project_url
-                root.appendNode 'inceptionYear', project.project_inceptionyear
-                root.children().last() + pomConfig
+            pom {
+                name = project.project_name
+                description = project.project_description
+                url = project.project_url
+                inceptionYear = project.project_inceptionyear
+                licenses {
+                    license {
+                        name = project.license_id
+                        url = project.license_url
+                        distribution = project.license_distribution
+                    }
+                }
+                developers {
+                    developer {
+                        id = project.developer_id
+                        name = project.developer_name
+                        email = project.developer_email
+                    }
+                }
+                scm {
+                    connection = project.scm_connection
+                    developerConnection = project.scm_devconnection
+                    url = project.scm_url
+                }
             }
         }
     }
