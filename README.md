@@ -1,8 +1,8 @@
-[![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson.svg)](https://travis-ci.org/Virtlink/commons-configuration2-jackson)
-[![GitHub version](https://badge.fury.io/gh/Virtlink%2Fcommons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
-[![Bintray](https://api.bintray.com/packages/virtlink/maven/commons-configuration2-jackson/images/download.svg)](https://bintray.com/virtlink/maven/commons-configuration2-jackson/_latestVersion)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson)
-[![GitHub license](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson.svg)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson)](https://travis-ci.org/Virtlink/commons-configuration2-jackson)
+[![GitHub](https://img.shields.io/github/v/release/Virtlink/commons-configuration2-jackson)](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
+[![Bintray](https://img.shields.io/bintray/v/virtlink/maven/commons-configuration2-jackson)](https://bintray.com/virtlink/maven/commons-configuration2-jackson/_latestVersion)
+[![Maven Central](https://img.shields.io/maven-central/v/com.virtlink.commons/commons-configuration2-jackson)](https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson)
+[![License](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE)
 
 # Jackson for Commons Configuration 2
 This project adds support for FasterXML's Jackson to [Apache Commons Configuration 2](https://commons.apache.org/proper/commons-configuration/).
