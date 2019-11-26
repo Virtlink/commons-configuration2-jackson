@@ -11,12 +11,6 @@ apply from: 'properties.gradle'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-
-configurations {
-    provided
-}
-
-
 repositories {
     mavenCentral()
 }
@@ -42,9 +36,6 @@ configurations.all {
     }
 }
 
-sourceSets.main.compileClasspath += configurations.provided
-idea.module.scopes.PROVIDED.plus += [configurations.provided]
-eclipse.classpath.plusConfigurations += configurations.provided
 
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
