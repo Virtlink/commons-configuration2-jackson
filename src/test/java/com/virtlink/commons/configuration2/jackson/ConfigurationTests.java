@@ -36,7 +36,7 @@ public abstract class ConfigurationTests<T extends FileBased & HierarchicalConfi
     /**
      * Creates a new configuration for use in tests.
      *
-     * @return The created configuration.
+     * @return the created configuration
      */
     protected T create() throws ConfigurationException {
         return create(new HashMap<String, Object>());
@@ -45,8 +45,8 @@ public abstract class ConfigurationTests<T extends FileBased & HierarchicalConfi
     /**
      * Creates a new configuration for use in tests.
      *
-     * @param properties The properties in the configuration.
-     * @return The created configuration.
+     * @param properties the properties in the configuration
+     * @return the created configuration
      */
     protected abstract T create(Map<String, Object> properties) throws ConfigurationException;
 
@@ -182,7 +182,7 @@ public abstract class ConfigurationTests<T extends FileBased & HierarchicalConfi
      * listOfComplexObjs(1).someObj.value: 40
      * </pre>
      *
-     * @return The example configuration string.
+     * @return the example configuration string
      * @throws ConfigurationException
      */
     protected String getExampleConfiguration() throws ConfigurationException, IOException {

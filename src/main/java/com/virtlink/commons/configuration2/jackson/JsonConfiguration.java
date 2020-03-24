@@ -35,7 +35,7 @@ public class JsonConfiguration extends JacksonConfiguration {
     /**
      * Initializes a new instance of the {@link JsonConfiguration} class.
      *
-     * @param config The configuration whose nodes to copy into this configuration.
+     * @param config the configuration whose nodes to copy into this configuration
      */
     public JsonConfiguration(final HierarchicalConfiguration<ImmutableNode> config) {
         super(new JsonFactory(), config);

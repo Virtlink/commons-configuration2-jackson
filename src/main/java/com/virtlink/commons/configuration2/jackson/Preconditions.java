@@ -24,9 +24,9 @@ package com.virtlink.commons.configuration2.jackson;
     /**
      * Ensures the reference is not null.
      *
-     * @param reference The reference to test.
-     * @return The reference.
-     * @throws NullPointerException
+     * @param reference the reference to test
+     * @return the reference
+     * @throws NullPointerException if the reference is null
      */
     public static <T> T checkNotNull(final T reference) {
         if (reference == null) {

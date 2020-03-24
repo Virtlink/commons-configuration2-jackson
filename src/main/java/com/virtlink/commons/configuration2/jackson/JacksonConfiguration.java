@@ -56,7 +56,7 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Initializes a new instance of the {@link JacksonConfiguration} class.
      *
-     * @param factory The Jackson factory to use.
+     * @param factory the Jackson factory to use
      */
     protected JacksonConfiguration(final JsonFactory factory) {
         this(factory, null);
@@ -65,8 +65,8 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Initializes a new instance of the {@link JacksonConfiguration} class.
      *
-     * @param factory The Jackson factory to use.
-     * @param config  The configuration whose nodes to copy into this configuration.
+     * @param factory the Jackson factory to use
+     * @param config  the configuration whose nodes to copy into this configuration
      */
     protected JacksonConfiguration(final JsonFactory factory, final HierarchicalConfiguration<ImmutableNode> config) {
         super(config);
@@ -81,9 +81,9 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Reads the configuration.
      *
-     * @param inputStream The input stream to read from.
-     * @throws ConfigurationException
-     * @throws IOException
+     * @param inputStream the input stream to read from
+     * @throws IOException if an I/O error occurs
+     * @throws ConfigurationException if a non-I/O related problem occurs
      */
     @Override
     public void read(final InputStream inputStream) throws ConfigurationException, IOException {
@@ -95,9 +95,9 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Reads the configuration.
      *
-     * @param reader The reader to read from.
-     * @throws ConfigurationException
-     * @throws IOException
+     * @param reader the reader to read from
+     * @throws IOException if an I/O error occurs
+     * @throws ConfigurationException if a non-I/O related problem occurs
      */
     @Override
     public void read(final Reader reader) throws ConfigurationException, IOException {
@@ -111,9 +111,9 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Writes the configuration.
      *
-     * @param writer The writer to write to.
-     * @throws ConfigurationException
-     * @throws IOException
+     * @param writer the writer to write to
+     * @throws IOException if an I/O error occurs
+     * @throws ConfigurationException if a non-I/O related problem occurs
      */
     @Override
     public void write(final Writer writer) throws ConfigurationException, IOException {
@@ -127,7 +127,7 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Sets the file locator to use for the next invocation of {@link #read(InputStream)} or {@link #write(Writer)}.
      *
-     * @param locator The file locator to use; or <code>null</code>.
+     * @param locator the file locator to use; or {@code null}
      */
     @Override
     public void initFileLocator(@Nullable final FileLocator locator) {
@@ -137,9 +137,9 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Creates a node for the specified object.
      *
-     * @param builder The node builder.
-     * @param obj The object.
-     * @return The created node.
+     * @param builder the node builder
+     * @param obj the object
+     * @return the created node
      */
     private ImmutableNode toNode(final Builder builder, final Object obj) {
         assert !(obj instanceof List);
@@ -154,9 +154,9 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Creates a node for the specified map.
      *
-     * @param builder The node builder.
-     * @param map The map.
-     * @return The created node.
+     * @param builder the node builder
+     * @param map the map
+     * @return the created node
      */
     private ImmutableNode mapToNode(final Builder builder, final Map<String, Object> map) {
         for (final Map.Entry<String, Object> entry : map.entrySet()) {
@@ -178,9 +178,9 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Adds a child node to the specified builder.
      *
-     * @param builder The builder to add the node to.
-     * @param name The name of the node.
-     * @param value The value of the node.
+     * @param builder the builder to add the node to
+     * @param name the name of the node
+     * @param value the value of the node
      */
     private void addChildNode(final Builder builder, final String name, final Object value) {
         assert !(value instanceof List);
@@ -197,9 +197,9 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Creates a node for the specified value.
      *
-     * @param builder The node builder.
-     * @param value The value.
-     * @return The created node.
+     * @param builder the node builder
+     * @param value the value
+     * @return the created node
      */
     private ImmutableNode valueToNode(final Builder builder, final Object value) {
         // Set the value of the node being built.
@@ -209,8 +209,8 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     /**
      * Gets a serialization object from a node.
      *
-     * @param node The node.
-     * @return The object representing the node.
+     * @param node the node
+     * @return the object representing the node
      */
     private Object fromNode(final ImmutableNode node) {
         if (!node.getChildren().isEmpty()) {
@@ -240,6 +240,12 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
         }
     }
 
+    /**
+     * Returns a map with for each name the child nodes that have that name.
+     *
+     * @param node the node whose children to search
+     * @return a map
+     */
     private Map<String, List<ImmutableNode>> getChildrenWithName(final ImmutableNode node) {
         final Map<String, List<ImmutableNode>> children = new HashMap<>();
         for (final ImmutableNode child : node.getChildren()) {
