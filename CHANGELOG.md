@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Updated dependencies to their latest versions.
 * Small improvements to the JavaDoc.
 * Removed some warnings.
-* Verify build with Oracle/OpenJDK 8, 11, and 14.
+* Verify build with Oracle/OpenJDK 8 and 11.
 
 ## 0.9.0
 
