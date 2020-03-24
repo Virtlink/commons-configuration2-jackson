@@ -3,11 +3,11 @@ dist: xenial
 os: linux
 jdk:
 - openjdk8
-- oraclejdk8
 - openjdk11
 - oraclejdk11
-- openjdk14
-- oraclejdk14
+# Requires Gradle 6.3 https://github.com/gradle/gradle/issues/10248
+#- openjdk14
+#- oraclejdk14
 
 script:
 - ./gradlew build
