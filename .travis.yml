@@ -1,6 +1,11 @@
 language: java
 jdk:
 - openjdk8
+- oraclejdk8
+- openjdk11
+- oraclejdk11
+- openjdk14
+- oraclejdk14
 
 script:
 - ./gradlew build
@@ -16,6 +21,7 @@ deploy:
     repo: Virtlink/commons-configuration2-jackson
     branch: master
     tags: true
+    jdk: openjdk8
 - provider: script
   script: ./gradlew bintrayUpload
   skip_cleanup: true
@@ -23,3 +29,4 @@ deploy:
     repo: Virtlink/commons-configuration2-jackson
     branch: master
     tags: true
+    jdk: openjdk8
