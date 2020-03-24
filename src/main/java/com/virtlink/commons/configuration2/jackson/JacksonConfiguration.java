@@ -38,6 +38,7 @@ import java.util.*;
 /**
  * A configuration using a Jackson language (e.g. YAML, JSON).
  */
+@SuppressWarnings("RedundantThrows")
 public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration implements FileBasedConfiguration, InputStreamSupport, FileLocatorAware {
 
     private static final TypeReference<HashMap<String, Object>> HASH_MAP_TYPE_REFERENCE
@@ -119,8 +120,8 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
     public void write(final Writer writer) throws ConfigurationException, IOException {
         Preconditions.checkNotNull(writer);
 
-        @SuppressWarnings("unchecked") final
-        HashMap<String, Object> settings = (HashMap<String, Object>) fromNode(this.getModel().getInMemoryRepresentation());
+        @SuppressWarnings("unchecked")
+        final HashMap<String, Object> settings = (HashMap<String, Object>) fromNode(this.getModel().getInMemoryRepresentation());
         this.mapper.writerWithDefaultPrettyPrinter().writeValue(writer, settings);
     }
 
@@ -145,7 +146,9 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
         assert !(obj instanceof List);
 
         if (obj instanceof Map) {
-            return mapToNode(builder, (Map<String, Object>) obj);
+            @SuppressWarnings("unchecked")
+            final Map<String, Object> map = (Map<String, Object>) obj;
+            return mapToNode(builder, map);
         } else {
             return valueToNode(builder, obj);
         }
@@ -164,7 +167,7 @@ public abstract class JacksonConfiguration extends BaseHierarchicalConfiguration
             final Object value = entry.getValue();
             if (value instanceof List) {
                 // For a list, add each list item as a child of this node.
-                for (final Object item : (List)value) {
+                for (final Object item : (List<?>)value) {
                     addChildNode(builder, key, item);
                 }
             } else {
