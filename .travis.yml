@@ -1,4 +1,6 @@
 language: java
+dist: xenial
+os: linux
 jdk:
 - openjdk8
 - oraclejdk8
@@ -12,19 +14,19 @@ script:
 
 deploy:
 - provider: releases
-  api_key: ${GITHUB_API_KEY}
+  edge: true
+  token: ${GITHUB_API_KEY}
   file_glob: true
   file:
     - ./build/libs/commons-configuration2-jackson-*.jar
-  skip_cleanup: true
   on:
     repo: Virtlink/commons-configuration2-jackson
     branch: master
     tags: true
     jdk: openjdk8
 - provider: script
+  edge: true
   script: ./gradlew bintrayUpload
-  skip_cleanup: true
   on:
     repo: Virtlink/commons-configuration2-jackson
     branch: master
