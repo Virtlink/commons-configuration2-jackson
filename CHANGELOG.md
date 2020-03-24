@@ -2,6 +2,18 @@
 This lists the most notable changes between releases of this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.10.0
+
+* Updated dependencies to their latest versions.
+* Small improvements to the JavaDoc.
+* Removed some warnings.
+* Verify build with Oracle/OpenJDK 8, 11, and 14.
+
+## 0.9.0
+
+* Updated dependencies to their latest versions.
+* Minor improvements to Gradle project structure.
+
 ## 0.8.0
 
 * Updated dependencies to their latest versions.
