@@ -1,11 +1,12 @@
-[![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson)](https://travis-ci.org/Virtlink/commons-configuration2-jackson)
-[![GitHub](https://img.shields.io/github/v/release/Virtlink/commons-configuration2-jackson)](https://github.com/Virtlink/commons-configuration2-jackson/releases/latest)
-[![Bintray](https://img.shields.io/bintray/v/virtlink/maven/commons-configuration2-jackson)](https://bintray.com/virtlink/maven/commons-configuration2-jackson/_latestVersion)
-[![Maven Central](https://img.shields.io/maven-central/v/com.virtlink.commons/commons-configuration2-jackson)](https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson)
-[![License](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson)](https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/Virtlink/commons-configuration2-jackson)][8]
+[![javadoc](https://javadoc.io/badge2/com.virtlink.commons/commons-configuration2-jackson/javadoc.svg)][5]
+[![GitHub](https://img.shields.io/github/v/release/Virtlink/commons-configuration2-jackson)][1]
+[![Bintray](https://img.shields.io/bintray/v/virtlink/maven/commons-configuration2-jackson)][6]
+[![Maven Central](https://img.shields.io/maven-central/v/com.virtlink.commons/commons-configuration2-jackson)][7]
+[![License](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson)][9]
 
 # Jackson for Commons Configuration 2
-This project adds support for FasterXML's Jackson to [Apache Commons Configuration 2](https://commons.apache.org/proper/commons-configuration/).
+This project adds support for FasterXML's Jackson to [Apache Commons Configuration 2][10].
 
 
 ## Installation
@@ -77,6 +78,7 @@ try (Writer writer = new PrintWriter("settings.json", "UTF-8")) {
 }
 ```
 
+Also refer to the [API documentation][5].
 
 ## Questions and Issues
 If you have a question, ask it on [Stack Overflow][2] under the `apache-commons-config` tag.
@@ -86,7 +88,7 @@ for a solution or workaround, or create a new issue.
 
 
 ## Copyright and License
-Copyright © 2015-2019 - Daniel Pelsmaeker
+Copyright © 2015-2020 - Daniel Pelsmaeker
 
 The code and files in this project are licensed under the [Apache License, Version 2.0][4].
 You may use the files in this project in compliance with the license.
@@ -97,3 +99,9 @@ You may use the files in this project in compliance with the license.
 [2]: https://stackoverflow.com/questions/tagged/apache-commons-config
 [3]: https://github.com/Virtlink/commons-configuration2-jackson/issues
 [4]: https://www.apache.org/licenses/LICENSE-2.0
+[5]: https://javadoc.io/doc/com.virtlink.commons/commons-configuration2-jackson
+[6]: https://bintray.com/virtlink/maven/commons-configuration2-jackson/_latestVersion
+[7]: https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson
+[8]: https://travis-ci.org/Virtlink/commons-configuration2-jackson
+[9]: https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE
+[10]: https://commons.apache.org/proper/commons-configuration/
