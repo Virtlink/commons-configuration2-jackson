@@ -4,8 +4,8 @@ plugins {
 }
 apply from: 'properties.gradle'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -13,15 +13,15 @@ repositories {
 
 
 dependencies {
-    api         "org.apache.commons:commons-configuration2:$commonsConfigurationVersion"
-    api         "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    api                 "org.apache.commons:commons-configuration2:$commonsConfigurationVersion"
+    api                 "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
 
-    compileOnly "com.google.code.findbugs:findbugs:$findbugsVersion"
+    compileOnly         "com.google.code.findbugs:findbugs:$findbugsVersion"
 
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion"
-    testImplementation "com.google.guava:guava:$guavaVersion"
-    testImplementation "commons-beanutils:commons-beanutils:$beanutilsVersion"
+    testImplementation  "junit:junit:$junitVersion"
+    testImplementation  "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion"
+    testImplementation  "com.google.guava:guava:$guavaVersion"
+    testImplementation  "commons-beanutils:commons-beanutils:$beanutilsVersion"
 }
 
 java {
