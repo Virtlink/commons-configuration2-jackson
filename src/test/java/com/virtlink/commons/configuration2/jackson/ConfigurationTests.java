@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public abstract class ConfigurationTests<T extends FileBased & HierarchicalConfiguration<ImmutableNode>> {
 
