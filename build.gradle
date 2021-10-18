@@ -1,10 +1,8 @@
 plugins {
     id "java-library"
     id "maven-publish"
-    id "com.jfrog.bintray" version "1.8.4"
 }
 apply from: 'properties.gradle'
-
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -73,35 +71,3 @@ publishing {
     }
 }
 
-
-bintray {
-	user = project.bintray_username
-	key = project.bintray_apikey
-	publications = ['mavenJava']
-	publish = true
-	pkg {
-		name = project.name
-		desc = project_description
-		websiteUrl = project_url
-		issueTrackerUrl = project_issues
-		vcsUrl = vcs_url
-		licenses = [license_name]
-		repo = project.bintray_repo
-		publicDownloadNumbers = true
-		version {
-			name = project.version
-			desc = project_description
-			released  = new Date()
-			vcsTag = vcs_tag
-			gpg {
-				sign = true
-				passphrase = gpg_passphrase
-			}
-            mavenCentralSync {
-                sync = true
-                user = sonatype_username
-                password = sonatype_password
-            }
-		}
-	}
-}
