@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
+    signing
 }
 
 repositories {
@@ -44,28 +45,30 @@ allprojects {
     }
 }
 
-val pomProjectName: String by project
-val pomInceptionYear: String by project
-val pomUrl: String by project
-val pomIssueUrl: String by project
-
-val pomLicenseName: String by project
-val pomLicenseId: String by project
-val pomLicenseUrl: String by project
-val pomLicenseDist: String by project
-
-val pomDeveloperId: String by project
-val pomDeveloperName: String by project
-val pomDeveloperEmail: String by project
-
-val pomScmUrl: String by project
-val pomScmConnection: String by project
-val pomScmDevConnection: String by project
 
 publishing {
     publications {
         create<MavenPublication>("lib") {
             from(components["java"])
+
+            // Use gradle.properties file:
+            val pomProjectName: String by project
+            val pomInceptionYear: String by project
+            val pomUrl: String by project
+            val pomIssueUrl: String by project
+
+            val pomLicenseName: String by project
+            val pomLicenseId: String by project
+            val pomLicenseUrl: String by project
+            val pomLicenseDist: String by project
+
+            val pomDeveloperId: String by project
+            val pomDeveloperName: String by project
+            val pomDeveloperEmail: String by project
+
+            val pomScmUrl: String by project
+            val pomScmConnection: String by project
+            val pomScmDevConnection: String by project
 
             pom {
                 name.set(pomProjectName)
@@ -92,8 +95,36 @@ publishing {
                     url.set(pomScmUrl)
                 }
             }
-
+            repositories {
+                maven {
+                    // Use command-line properties or environment variables:
+                    // - ORG_GRADLE_PROJECT_ossrhUser
+                    // - ORG_GRADLE_PROJECT_ossrhPassword
+                    val ossrhUser: String? by project
+                    val ossrhPassword: String? by project
+                    name = "OSSRH"
+                    url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+                    credentials {
+                        username = ossrhUser
+                        password = ossrhPassword
+                    }
+                }
+            }
         }
     }
 }
 
+signing {
+    // Use command-line properties or environment variables:
+    // - ORG_GRADLE_PROJECT_signingKeyId
+    // - ORG_GRADLE_PROJECT_signingKey
+    // - ORG_GRADLE_PROJECT_signingPassword
+    val signingKeyId: String? by project
+    val signingKey: String? by project
+    val signingPassword: String? by project
+
+    val publishing: PublishingExtension by project
+
+    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    sign(publishing.publications)
+}
