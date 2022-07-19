@@ -2,6 +2,15 @@
 This lists the most notable changes between releases of this project.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.11.0
+
+* Updated dependencies to their latest versions.
+  * Jackson to 2.13.3 (from 2.13.0)
+  * Guava to 31.1 (from 31.0.1)
+  * Commons Configuration2 to 2.8.0 (from 2.7)
+  * Gradle wrapper
+* Improved Gradle build files
+
 ## 0.10.0
 
 * Updated dependencies to their latest versions.

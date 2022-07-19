@@ -1,0 +1,19 @@
+[versions]
+jackson                 = "2.13.3"
+commons-configuration2  = "2.8.0"
+commons-beanutils       = "1.9.4"
+findbugs                = "3.0.1"
+junit                   = "4.13.2"
+guava                   = "31.1-jre"
+
+[libraries]
+commons-configuration2  = { module = "org.apache.commons:commons-configuration2",                   version.ref = "commons-configuration2" }
+commons-beanutils       = { module = "commons-beanutils:commons-beanutils",                         version.ref = "commons-beanutils" }
+
+jackson-databind        = { module = "com.fasterxml.jackson.core:jackson-databind",                 version.ref = "jackson" }
+jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml",    version.ref = "jackson" }
+
+junit                   = { module = "junit:junit",                                                 version.ref = "junit" }
+findbugs                = { module = "com.google.code.findbugs:findbugs",                           version.ref = "findbugs" }
+guava                   = { module = "com.google.guava:guava",                                      version.ref = "guava" }
+

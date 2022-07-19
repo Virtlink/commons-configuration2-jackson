@@ -22,7 +22,7 @@ In Maven, add to your `<dependencies>` tag
 <dependency>
     <groupId>com.virtlink.commons</groupId>
     <artifactId>commons-configuration2-jackson</artifactId>
-    <version>0.10.0</version>
+    <version>0.11.0</version>
 </dependency>
 ```
 

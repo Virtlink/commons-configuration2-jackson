@@ -2,36 +2,31 @@ plugins {
     `java-library`
     `maven-publish`
     signing
+    id("com.github.ben-manes.versions") version "0.42.0"
 }
+
+version = "0.11.0"
+group = "com.virtlink.commons"
+description = "Adds support for FasterXML's Jackson to Apache Commons Configuration 2."
 
 repositories {
     mavenCentral()
 }
 
-// Versions
-val jacksonVersion = "2.13.0"
-val commonsConfigurationVersion = "2.7"
-val findbugsVersion = "3.0.1"
-val junitVersion = "4.13.2"
-val guavaVersion = "31.0.1-jre"
-val beanutilsVersion = "1.9.4"
-
 dependencies {
-    api                 ("org.apache.commons:commons-configuration2:$commonsConfigurationVersion")
-    api                 ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    api                 (libs.commons.configuration2)
+    api                 (libs.jackson.databind)
 
-    compileOnly         ("com.google.code.findbugs:findbugs:$findbugsVersion")
+    compileOnly         (libs.findbugs)
 
-    testImplementation  ("junit:junit:$junitVersion")
-    testImplementation  ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
-    testImplementation  ("com.google.guava:guava:$guavaVersion")
-    testImplementation  ("commons-beanutils:commons-beanutils:$beanutilsVersion")
+    testImplementation  (libs.junit)
+    testImplementation  (libs.jackson.dataformat.yaml)
+    testImplementation  (libs.guava)
+    testImplementation  (libs.commons.beanutils)
 }
 
 configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-
+    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
     withSourcesJar()
     withJavadocJar()
 }
@@ -45,10 +40,9 @@ allprojects {
     }
 }
 
-
 publishing {
     publications {
-        create<MavenPublication>("lib") {
+        create<MavenPublication>("mavenJava") {
             from(components["java"])
 
             // Use gradle.properties file:
@@ -71,42 +65,38 @@ publishing {
             val pomScmDevConnection: String by project
 
             pom {
-                name.set(pomProjectName)
+                name.set("Jackson for Commons Configuration 2")
                 description.set(project.description)
-                url.set(pomUrl)
-                inceptionYear.set(pomInceptionYear)
+                url.set("https://github.com/Virtlink/commons-configuration2-jackson")
+                inceptionYear.set("2015")
                 licenses {
+                    // From: https://spdx.org/licenses/
                     license {
-                        name.set(pomLicenseId)
-                        url.set(pomLicenseUrl)
-                        distribution.set(pomLicenseDist)
+                        name.set("Apache-2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        distribution.set("repo")
                     }
                 }
                 developers {
                     developer {
-                        id.set(pomDeveloperId)
-                        name.set(pomDeveloperName)
-                        email.set(pomDeveloperEmail)
+                        id.set("virtlink")
+                        name.set("Daniel A. A. Pelsmaeker")
+                        email.set("d.a.a.pelsmaeker@tudelft.nl")
                     }
                 }
                 scm {
-                    connection.set(pomScmConnection)
-                    developerConnection.set(pomScmDevConnection)
-                    url.set(pomScmUrl)
+                    connection.set("scm:git@github.com:Virtlink/commons-configuration2-jackson.git")
+                    developerConnection.set("scm:git@github.com:Virtlink/commons-configuration2-jackson.git")
+                    url.set("scm:git@github.com:Virtlink/commons-configuration2-jackson.git")
                 }
             }
             repositories {
                 maven {
-                    // Use command-line properties or environment variables:
-                    // - ORG_GRADLE_PROJECT_ossrhUser
-                    // - ORG_GRADLE_PROJECT_ossrhPassword
-                    val ossrhUser: String? by project
-                    val ossrhPassword: String? by project
                     name = "OSSRH"
-                    url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+                    url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
                     credentials {
-                        username = ossrhUser
-                        password = ossrhPassword
+                        username = findProperty("ossrhUsername") ?: System.getenv("OSSRH_USERNAME")
+                        password = findProperty("ossrhPassword") ?: System.getenv("OSSRH_PASSWORD")
                     }
                 }
             }
@@ -115,16 +105,5 @@ publishing {
 }
 
 signing {
-    // Use command-line properties or environment variables:
-    // - ORG_GRADLE_PROJECT_signingKeyId
-    // - ORG_GRADLE_PROJECT_signingKey
-    // - ORG_GRADLE_PROJECT_signingPassword
-    val signingKeyId: String? by project
-    val signingKey: String? by project
-    val signingPassword: String? by project
-
-    val publishing: PublishingExtension by project
-
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    sign(publishing.publications)
+    sign(publishing.publications["mavenJava"])
 }
