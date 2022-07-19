@@ -3,10 +3,13 @@
 #
 # To publish a new release of this package:
 #
-# 1.  On GitHub, create a release with the version number as the tag (in the
-# format `v1.2.3`), the name `Release 1.2.3`, and the relevant excerpt from the
-# changelog.
+# 1.  Create (and push) a tag with the version number (in the format `1.2.3`):
+#     ```
+#     git tag -a 1.2.3
+#     git push origin 1.2.3
+#     ```
 # 2.  This will trigger the `publish` workflow, wait for it to complete.
+#     It publishes the package at OSSRH and creates a release on GitHub.
 # 3.  Login into OSSRH at https://oss.sonatype.org/
 # 4.  Go to 'Staging Repositories' on the left.
 # 5.  Select the repository, and click the 'Close' button at the top.
@@ -52,13 +55,16 @@
 name: Publish to Maven Central
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - "*.*.*"
 
 jobs:
   publish:
     name: Publish to Maven Central
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -78,7 +84,13 @@ jobs:
       - name: Publish package
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: publish -Psigning.keyId=${{secrets.OSSRH_SIGNING_KEY_ID}} -Psigning.password=${{secrets.OSSRH_SIGNING_KEY_PASSWORD}} -Psigning.secretKeyRingFile=secring.gpg
+          arguments: assemble publish -Psigning.keyId=${{secrets.OSSRH_SIGNING_KEY_ID}} -Psigning.password=${{secrets.OSSRH_SIGNING_KEY_PASSWORD}} -Psigning.secretKeyRingFile=secring.gpg
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+      - name: Release on GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "Release ${GITHUB_REF_NAME}"
+          files: build/libs/commons-configuration2-jackson-${GITHUB_REF_NAME}*
+          fail_on_unmatched_files: true
