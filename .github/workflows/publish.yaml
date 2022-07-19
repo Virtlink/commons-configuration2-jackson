@@ -91,6 +91,6 @@ jobs:
       - name: Release on GitHub
         uses: softprops/action-gh-release@v1
         with:
-          name: "Release ${GITHUB_REF_NAME}"
-          files: build/libs/commons-configuration2-jackson-${GITHUB_REF_NAME}*
+          name: "Release ${{ github.ref_name }}"
+          files: build/libs/commons-configuration2-jackson-${{ github.ref_name }}*
           fail_on_unmatched_files: true
