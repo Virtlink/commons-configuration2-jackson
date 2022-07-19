@@ -76,15 +76,15 @@ jobs:
           cache: gradle
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
-      - name: Git status
-        run: git status -sbu
       - name: Decode GPG secret key ring
         run: |
-          printf "${{secrets.OSSRH_SIGNING_KEY_RING_FILE}}" | base64 --decode > secring.gpg
+          printf "${{secrets.OSSRH_SIGNING_KEY_RING_FILE}}" | base64 --decode > ~/secring.gpg
       - name: Publish package
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: assemble publish -Psigning.keyId=${{secrets.OSSRH_SIGNING_KEY_ID}} -Psigning.password=${{secrets.OSSRH_SIGNING_KEY_PASSWORD}} -Psigning.secretKeyRingFile=secring.gpg
+        run: |
+          ./gradlew assemble publish \
+          -Psigning.keyId=${{secrets.OSSRH_SIGNING_KEY_ID}} \
+          -Psigning.password=${{secrets.OSSRH_SIGNING_KEY_PASSWORD}} \
+          -Psigning.secretKeyRingFile=~/secring.gpg
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
