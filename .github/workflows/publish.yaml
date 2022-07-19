@@ -76,6 +76,8 @@ jobs:
           cache: gradle
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
+      - name: Git status
+        run: git status -sbu
       - name: Decode GPG secret key ring
         run: |
           printf "${{secrets.OSSRH_SIGNING_KEY_RING_FILE}}" | base64 --decode > secring.gpg
