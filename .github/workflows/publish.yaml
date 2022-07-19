@@ -1,0 +1,51 @@
+# This requires the following secrets to be set in GitHub:
+# - OSSRH_USERNAME: The OSSRH username
+# - OSSRH_TOKEN: The OSSRH token
+# - OSSRH_SIGNING_KEY_ID: The ID of the GPG signing key (see below)
+# - OSSRH_SIGNING_KEY_PASSWORD: The password for the signing key
+# - OSSRH_SIGNING_KEY_RING_FILE: The key ring file, base-64 encoded.
+#
+# Obtaining the OSSRH_SIGNING_KEY_ID:
+# ```
+# gpg --list-secret-keys --keyid-format SHORT
+# ```
+#
+# Obtaining the base-64 encoded OSSRH_SIGNING_KEY_RING_FILE:
+# ```
+# gpg --export-secret-keys [keyid] | base64 > secring.gpg.b64
+# ```
+
+
+name: Publish to Maven Central
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish:
+    name: Publish to Maven Central
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup JDK 8
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Make Gradle Wrapper executable
+        run: chmod +x gradlew
+      - name: Decode GPG secret key ring
+        run: |
+          printf "${{secrets.OSSRH_SIGNING_KEY_RING_FILE}}" | base64 --decode > ~/secring.gpg
+      - name: Publish package
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: clean publish -Psigning.keyId=${{secrets.OSSRH_SIGNING_KEY_ID}} -Psigning.password=${{secrets.OSSRH_SIGNING_KEY_PASSWORD}} -Psigning.secretKeyRingFile=~/secring.gpg
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
