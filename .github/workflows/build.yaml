@@ -21,6 +21,8 @@ jobs:
           cache: gradle
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
+      - run: |
+          pwd && ls -la && git status -sbu
       - name: Build
         uses: gradle/gradle-build-action@v2
         with:
