@@ -6,6 +6,12 @@ findbugs                = "3.0.1"
 junit                   = "4.13.2"
 guava                   = "31.1-jre"
 
+
+[plugins]
+gitversion              = { id = "com.palantir.git-version",                                        version = "0.15.0" }
+versions                = { id = "com.github.ben-manes.versions",                                   version = "0.42.0" }
+
+
 [libraries]
 commons-configuration2  = { module = "org.apache.commons:commons-configuration2",                   version.ref = "commons-configuration2" }
 commons-beanutils       = { module = "commons-beanutils:commons-beanutils",                         version.ref = "commons-beanutils" }

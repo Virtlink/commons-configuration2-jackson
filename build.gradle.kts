@@ -2,10 +2,13 @@ plugins {
     `java-library`
     `maven-publish`
     signing
-    id("com.github.ben-manes.versions") version "0.42.0"
+    alias(libs.plugins.gitversion)
+    alias(libs.plugins.versions)
 }
 
-version = "0.11.0"
+val gitVersion: groovy.lang.Closure<String> by extra
+
+version = gitVersion()
 group = "com.virtlink.commons"
 description = "Adds support for FasterXML's Jackson to Apache Commons Configuration 2."
 
@@ -44,25 +47,6 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
-
-            // Use gradle.properties file:
-            val pomProjectName: String by project
-            val pomInceptionYear: String by project
-            val pomUrl: String by project
-            val pomIssueUrl: String by project
-
-            val pomLicenseName: String by project
-            val pomLicenseId: String by project
-            val pomLicenseUrl: String by project
-            val pomLicenseDist: String by project
-
-            val pomDeveloperId: String by project
-            val pomDeveloperName: String by project
-            val pomDeveloperEmail: String by project
-
-            val pomScmUrl: String by project
-            val pomScmConnection: String by project
-            val pomScmDevConnection: String by project
 
             pom {
                 name.set("Jackson for Commons Configuration 2")
