@@ -95,8 +95,8 @@ publishing {
                     name = "OSSRH"
                     url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
                     credentials {
-                        username = findProperty("ossrhUsername") ?: System.getenv("OSSRH_USERNAME")
-                        password = findProperty("ossrhPassword") ?: System.getenv("OSSRH_PASSWORD")
+                        username = System.getenv("OSSRH_USERNAME")
+                        password = System.getenv("OSSRH_PASSWORD")
                     }
                 }
             }
