@@ -1,10 +1,10 @@
 [versions]
 # Plugins
 git-version             = "0.15.0"          # https://github.com/palantir/gradle-git-version
-ben-manes-versions      = "0.42.0"          # https://github.com/ben-manes/gradle-versions-plugin
+ben-manes-versions      = "0.43.0"          # https://github.com/ben-manes/gradle-versions-plugin
 
 # Libraries
-jackson                 = "2.13.3"          # https://github.com/FasterXML/jackson
+jackson                 = "2.14.0"          # https://github.com/FasterXML/jackson
 commons-configuration2  = "2.8.0"           # https://github.com/apache/commons-configuration
 commons-beanutils       = "1.9.4"           # https://github.com/apache/commons-beanutils
 findbugs                = "3.0.1"           # https://github.com/spotbugs/spotbugs
