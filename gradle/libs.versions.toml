@@ -8,6 +8,7 @@ dependencycheck         = "7.3.0"           # https://github.com/dependency-chec
 jackson                 = "2.14.0"          # https://github.com/FasterXML/jackson
 commons-configuration2  = "2.8.0"           # https://github.com/apache/commons-configuration
 commons-beanutils       = "1.9.4"           # https://github.com/apache/commons-beanutils
+commons-text            = "1.10.0"          # https://github.com/apache/commons-text
 jsr305                  = "3.0.2"           # https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305
 junit                   = "4.13.2"          # https://junit.org/junit4/
 guava                   = "31.1-jre"        # https://github.com/google/guava
@@ -22,6 +23,7 @@ dependencycheck         = { id = "org.owasp.dependencycheck",                   
 [libraries]
 commons-configuration2  = { module = "org.apache.commons:commons-configuration2",                   version.ref = "commons-configuration2" }
 commons-beanutils       = { module = "commons-beanutils:commons-beanutils",                         version.ref = "commons-beanutils" }
+commons-text            = { module = "org.apache.commons:commons-text",                             version.ref = "commons-text" }
 
 jackson-databind        = { module = "com.fasterxml.jackson.core:jackson-databind",                 version.ref = "jackson" }
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml",    version.ref = "jackson" }

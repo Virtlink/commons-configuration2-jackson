@@ -20,6 +20,7 @@ repositories {
 dependencies {
     api                 (libs.commons.configuration2)
     api                 (libs.jackson.databind)
+    api                 (libs.commons.text) // Dependency override of commons.configuration2
 
     compileOnly         (libs.jsr305)
 
