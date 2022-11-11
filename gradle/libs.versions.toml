@@ -8,7 +8,7 @@ dependencycheck         = "7.3.0"           # https://github.com/dependency-chec
 jackson                 = "2.14.0"          # https://github.com/FasterXML/jackson
 commons-configuration2  = "2.8.0"           # https://github.com/apache/commons-configuration
 commons-beanutils       = "1.9.4"           # https://github.com/apache/commons-beanutils
-findbugs                = "3.0.1"           # https://github.com/spotbugs/spotbugs
+jsr305                  = "3.0.2"           # https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305
 junit                   = "4.13.2"          # https://junit.org/junit4/
 guava                   = "31.1-jre"        # https://github.com/google/guava
 
@@ -27,6 +27,6 @@ jackson-databind        = { module = "com.fasterxml.jackson.core:jackson-databin
 jackson-dataformat-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml",    version.ref = "jackson" }
 
 junit                   = { module = "junit:junit",                                                 version.ref = "junit" }
-findbugs                = { module = "com.google.code.findbugs:findbugs",                           version.ref = "findbugs" }
+jsr305                  = { module = "com.google.code.findbugs:jsr305",                             version.ref = "jsr305" }
 guava                   = { module = "com.google.guava:guava",                                      version.ref = "guava" }
 

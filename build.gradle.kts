@@ -21,7 +21,7 @@ dependencies {
     api                 (libs.commons.configuration2)
     api                 (libs.jackson.databind)
 
-    compileOnly         (libs.findbugs)
+    compileOnly         (libs.jsr305)
 
     testImplementation  (libs.junit)
     testImplementation  (libs.jackson.dataformat.yaml)
