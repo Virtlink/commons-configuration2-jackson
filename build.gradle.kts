@@ -4,6 +4,7 @@ plugins {
     signing
     alias(libs.plugins.gitversion)
     alias(libs.plugins.versions)
+    alias(libs.plugins.dependencycheck)
 }
 
 val gitVersion: groovy.lang.Closure<String> by extra

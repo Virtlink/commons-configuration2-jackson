@@ -2,6 +2,7 @@
 # Plugins
 git-version             = "0.15.0"          # https://github.com/palantir/gradle-git-version
 ben-manes-versions      = "0.43.0"          # https://github.com/ben-manes/gradle-versions-plugin
+dependencycheck         = "7.3.0"           # https://github.com/dependency-check/dependency-check-gradle
 
 # Libraries
 jackson                 = "2.14.0"          # https://github.com/FasterXML/jackson
@@ -15,6 +16,7 @@ guava                   = "31.1-jre"        # https://github.com/google/guava
 [plugins]
 gitversion              = { id = "com.palantir.git-version",                                        version.ref = "git-version" }
 versions                = { id = "com.github.ben-manes.versions",                                   version.ref = "ben-manes-versions" }
+dependencycheck         = { id = "org.owasp.dependencycheck",                                       version.ref = "dependencycheck" }
 
 
 [libraries]
