@@ -97,7 +97,7 @@ You may use the files in this project in compliance with the license.
 [1]: https://github.com/Virtlink/commons-configuration2-jackson/actions/workflows/build.yaml
 [2]: https://javadoc.io/doc/com.virtlink.commons/commons-configuration2-jackson
 [3]: https://github.com/Virtlink/commons-configuration2-jackson/releases/latest
-[4]: https://maven-badges.herokuapp.com/maven-central/com.virtlink.commons/commons-configuration2-jackson
+[4]: https://mvnrepository.com/artifact/com.virtlink.commons/commons-configuration2-jackson
 [5]: https://github.com/Virtlink/commons-configuration2-jackson/blob/master/LICENSE
 [6]: https://commons.apache.org/proper/commons-configuration/
 [7]: https://stackoverflow.com/questions/tagged/apache-commons-config
