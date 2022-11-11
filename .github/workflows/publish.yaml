@@ -11,12 +11,13 @@
 # 2.  This will trigger the `publish` workflow, wait for it to complete.
 #     It publishes the package at OSSRH and creates a release on GitHub.
 # 3.  Login into OSSRH at https://oss.sonatype.org/
-# 4.  Go to 'Staging Repositories' on the left.
+# 4.  Go to 'Staging Repositories' on the left,
+#     click the Refresh button at the top to see the repositories.
 # 5.  Select the repository, and click the 'Close' button at the top.
 # 6.  This will validate the package requirements. Wait for it to complete,
 #     by clicking the Refresh button at the top periodically.
-# 7.  Once successfully closed, click the 'Publish' button to publish the
-#     package on Maven Central.
+# 7.  Once successfully closed, click the 'Release' button to publish the
+#     package on Maven Central. The repository may be dropped after release.
 # 8.  Again, wait for the operation to complete.
 # 9.  It can take a while for the new release to appear on Maven Central at:
 #     https://search.maven.org/artifact/com.virtlink.commons/commons-configuration2-jackson
