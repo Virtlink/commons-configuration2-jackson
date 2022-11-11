@@ -1,10 +1,11 @@
-[![build](https://github.com/virtlink/commons-configuration2-jackson/actions/workflows/build.yaml/badge.svg)][1]
-[![javadoc](https://javadoc.io/badge2/com.virtlink.commons/commons-configuration2-jackson/javadoc.svg)][2]
+# Jackson for Commons Configuration 2
+
+[![Build](https://github.com/virtlink/commons-configuration2-jackson/actions/workflows/build.yaml/badge.svg)][1]
+[![JavaDoc](https://javadoc.io/badge2/com.virtlink.commons/commons-configuration2-jackson/javadoc.svg)][2]
 [![GitHub](https://img.shields.io/github/v/release/Virtlink/commons-configuration2-jackson)][3]
 [![Maven Central](https://img.shields.io/maven-central/v/com.virtlink.commons/commons-configuration2-jackson)][4]
 [![License](https://img.shields.io/github/license/Virtlink/commons-configuration2-jackson)][5]
 
-# Jackson for Commons Configuration 2
 This project adds support for FasterXML's Jackson to [Apache Commons Configuration 2][6].
 
 ## Installation
