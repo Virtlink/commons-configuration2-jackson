@@ -1,15 +1,20 @@
 [versions]
-jackson                 = "2.13.3"
-commons-configuration2  = "2.8.0"
-commons-beanutils       = "1.9.4"
-findbugs                = "3.0.1"
-junit                   = "4.13.2"
-guava                   = "31.1-jre"
+# Plugins
+git-version             = "0.15.0"          # https://github.com/palantir/gradle-git-version
+ben-manes-versions      = "0.42.0"          # https://github.com/ben-manes/gradle-versions-plugin
+
+# Libraries
+jackson                 = "2.13.3"          # https://github.com/FasterXML/jackson
+commons-configuration2  = "2.8.0"           # https://github.com/apache/commons-configuration
+commons-beanutils       = "1.9.4"           # https://github.com/apache/commons-beanutils
+findbugs                = "3.0.1"           # https://github.com/spotbugs/spotbugs
+junit                   = "4.13.2"          # https://junit.org/junit4/
+guava                   = "31.1-jre"        # https://github.com/google/guava
 
 
 [plugins]
-gitversion              = { id = "com.palantir.git-version",                                        version = "0.15.0" }
-versions                = { id = "com.github.ben-manes.versions",                                   version = "0.42.0" }
+gitversion              = { id = "com.palantir.git-version",                                        version.ref = "git-version" }
+versions                = { id = "com.github.ben-manes.versions",                                   version.ref = "ben-manes-versions" }
 
 
 [libraries]
