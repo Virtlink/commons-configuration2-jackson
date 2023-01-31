@@ -86,7 +86,7 @@ for a solution or workaround, or create a new issue.
 
 
 ## Copyright and License
-Copyright © 2015-2022 - Daniel A. A. Pelsmaeker
+Copyright © 2015-2023 - Daniel A. A. Pelsmaeker
 
 The code and files in this project are licensed under the [Apache License, Version 2.0][9].
 You may use the files in this project in compliance with the license.
