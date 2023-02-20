@@ -1,8 +1,8 @@
 [versions]
 # Plugins
-git-version             = "0.15.0"          # https://github.com/palantir/gradle-git-version
-ben-manes-versions      = "0.44.0"          # https://github.com/ben-manes/gradle-versions-plugin
-dependencycheck         = "8.0.2"           # https://github.com/dependency-check/dependency-check-gradle
+git-version             = "1.0.0"           # https://github.com/palantir/gradle-git-version
+ben-manes-versions      = "0.45.0"          # https://github.com/ben-manes/gradle-versions-plugin
+dependencycheck         = "8.1.0"           # https://github.com/dependency-check/dependency-check-gradle
 
 # Libraries
 jackson                 = "2.14.2"          # https://github.com/FasterXML/jackson
