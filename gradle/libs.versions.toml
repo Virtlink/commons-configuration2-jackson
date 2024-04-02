@@ -1,17 +1,17 @@
 [versions]
 # Plugins
-git-version             = "1.0.0"           # https://github.com/palantir/gradle-git-version
-ben-manes-versions      = "0.45.0"          # https://github.com/ben-manes/gradle-versions-plugin
-dependencycheck         = "8.1.0"           # https://github.com/dependency-check/dependency-check-gradle
+git-version             = "3.0.0"           # https://github.com/palantir/gradle-git-version
+ben-manes-versions      = "0.51.0"          # https://github.com/ben-manes/gradle-versions-plugin
+dependencycheck         = "9.1.0"           # https://github.com/dependency-check/dependency-check-gradle
 
 # Libraries
-jackson                 = "2.14.2"          # https://github.com/FasterXML/jackson
-commons-configuration2  = "2.8.0"           # https://github.com/apache/commons-configuration
+jackson                 = "2.17.0"          # https://github.com/FasterXML/jackson
+commons-configuration2  = "2.10.1"          # https://github.com/apache/commons-configuration
 commons-beanutils       = "1.9.4"           # https://github.com/apache/commons-beanutils
-commons-text            = "1.10.0"          # https://github.com/apache/commons-text
+commons-text            = "1.11.0"          # https://github.com/apache/commons-text
 jsr305                  = "3.0.2"           # https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305
 junit                   = "4.13.2"          # https://junit.org/junit4/
-guava                   = "31.1-jre"        # https://github.com/google/guava
+guava                   = "33.1.0-jre"      # https://github.com/google/guava
 
 
 [plugins]
