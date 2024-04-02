@@ -4,14 +4,14 @@ obj:
   value: 1
 name: "testName"
 listOfObjs:
-- name: "testname"
-  value: 4
-- name: "other"
-  value: 20
-listOfComplexObjs:
-- someObj:
-    name: "a name"
+  - name: "testname"
+    value: 4
+  - name: "other"
     value: 20
-- someObj:
-    name: "another name"
-    value: 40
+listOfComplexObjs:
+  - someObj:
+      name: "a name"
+      value: 20
+  - someObj:
+      name: "another name"
+      value: 40
