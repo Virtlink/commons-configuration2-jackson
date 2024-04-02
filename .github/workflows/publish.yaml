@@ -92,9 +92,9 @@ jobs:
           printf "${{ secrets.OSSRH_SIGNING_KEY_RING_FILE }}" | base64 --decode > "/home/runner/secring.gpg"
       - name: Publish package to OSSRH
         run: |
-          gradle assemble publish
-            -Psigning.keyId=${{ secrets.OSSRH_SIGNING_KEY_ID }}
-            -Psigning.password=${{ secrets.OSSRH_SIGNING_KEY_PASSWORD }}
+          gradle assemble publish \
+            -Psigning.keyId=${{ secrets.OSSRH_SIGNING_KEY_ID }} \
+            -Psigning.password=${{ secrets.OSSRH_SIGNING_KEY_PASSWORD }} \
             -Psigning.secretKeyRingFile=/home/runner/secring.gpg
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
