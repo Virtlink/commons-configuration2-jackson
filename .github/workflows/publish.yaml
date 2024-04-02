@@ -65,6 +65,7 @@ jobs:
     name: Publish to Maven Central
     permissions:
       contents: write
+      packages: write
     strategy:
       matrix:
         os: [ubuntu-latest]   # Just one
@@ -103,5 +104,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: "Release ${{ github.ref_name }}"
-          files: "**/build/libs/myapp-${{ github.ref_name }}*"
+          files: "**/build/libs/commons-configuration2-jackson-${{ github.ref_name }}*"
           fail_on_unmatched_files: true
