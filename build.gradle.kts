@@ -4,6 +4,7 @@ plugins {
     `java-library`
     `maven-publish`
     signing
+    alias(libs.plugins.nexuspublish)
     alias(libs.plugins.gitversion)
     alias(libs.plugins.versions)
     alias(libs.plugins.dependencycheck)
@@ -78,16 +79,17 @@ publishing {
                     url.set("scm:git@github.com:Virtlink/commons-configuration2-jackson.git")
                 }
             }
-            repositories {
-                maven {
-                    name = "OSSRH"
-                    url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-                    credentials {
-                        username = System.getenv("OSSRH_USERNAME")
-                        password = System.getenv("OSSRH_TOKEN")
-                    }
-                }
-            }
+        }
+    }
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
+            username.set(project.findProperty("ossrh.user") as String? ?: System.getenv("OSSRH_USERNAME"))
+            password.set(project.findProperty("ossrh.token") as String? ?: System.getenv("OSSRH_TOKEN"))
         }
     }
 }

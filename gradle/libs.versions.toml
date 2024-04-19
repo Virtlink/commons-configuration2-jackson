@@ -3,6 +3,7 @@
 git-version             = "3.0.0"           # https://github.com/palantir/gradle-git-version
 ben-manes-versions      = "0.51.0"          # https://github.com/ben-manes/gradle-versions-plugin
 dependencycheck         = "9.1.0"           # https://github.com/dependency-check/dependency-check-gradle
+nexuspublish            = "2.0.0"           # https://github.com/gradle-nexus/publish-plugin/
 
 # Libraries
 jackson                 = "2.17.0"          # https://github.com/FasterXML/jackson
@@ -18,6 +19,7 @@ guava                   = "33.1.0-jre"      # https://github.com/google/guava
 gitversion              = { id = "com.palantir.git-version",                                        version.ref = "git-version" }
 versions                = { id = "com.github.ben-manes.versions",                                   version.ref = "ben-manes-versions" }
 dependencycheck         = { id = "org.owasp.dependencycheck",                                       version.ref = "dependencycheck" }
+nexuspublish            = { id = "io.github.gradle-nexus.publish-plugin",                           version.ref = "nexuspublish" }
 
 
 [libraries]

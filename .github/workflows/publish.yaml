@@ -1,59 +1,5 @@
 ---
-# Publish
-# =======
-#
-# To publish a new release of this package:
-#
-# 1.  Create (and push) a tag with the version number (in the format `1.2.3`):
-#     ```
-#     git tag 1.2.3
-#     git push origin 1.2.3
-#     ```
-# 2.  This will trigger the `publish` workflow, wait for it to complete.
-#     It publishes the package at OSSRH and creates a release on GitHub.
-# 3.  Login into OSSRH at https://oss.sonatype.org/
-# 4.  Go to 'Staging Repositories' on the left,
-#     click the Refresh button at the top to see the repositories.
-# 5.  Select the repository, and click the 'Close' button at the top.
-# 6.  This will validate the package requirements. Wait for it to complete,
-#     by clicking the Refresh button at the top periodically.
-# 7.  Once successfully closed, click the 'Release' button to publish the
-#     package on Maven Central. The repository may be dropped after release.
-# 8.  Again, wait for the operation to complete.
-# 9.  It can take a while for the new release to appear on Maven Central at:
-#     https://search.maven.org/artifact/com.virtlink.commons/commons-configuration2-jackson
-# 10. Done!
-#
-#
-# Setup
-# -----
-# This requires the following secrets to be set in GitHub:
-# - OSSRH_USERNAME: The OSSRH username
-# - OSSRH_TOKEN: The OSSRH token
-# - OSSRH_SIGNING_KEY_ID: The ID of the GPG signing key (see below)
-# - OSSRH_SIGNING_KEY_PASSWORD: The password for the signing key
-# - OSSRH_SIGNING_KEY_RING_FILE: The key ring file, base-64 encoded.
-#
-# Obtaining the OSSRH_USERNAME and OSSRH_TOKEN:
-#
-# 1. Login into https://oss.sonatype.org/
-# 2. Click your username in the top-right, go to Profile.
-# 3. In the drop-down box, change from Summary to User Token.
-# 4. Click the Access User Token button. It will give a username and token.
-#
-# Obtaining the OSSRH_SIGNING_KEY_ID:
-#
-# ```
-# gpg --list-secret-keys --keyid-format SHORT
-# ```
-#
-# Obtaining the base-64 encoded OSSRH_SIGNING_KEY_RING_FILE:
-#
-# ```
-# gpg --export-secret-keys [keyid] | base64 > secring.gpg.b64
-# ```
-
-name: Publish to Maven Central
+name: Publish
 
 on:  # yamllint disable-line rule:truthy
   push:
@@ -62,7 +8,7 @@ on:  # yamllint disable-line rule:truthy
 
 jobs:
   publish:
-    name: Publish to Maven Central
+    name: Publish
     permissions:
       contents: write
       packages: write
@@ -92,7 +38,7 @@ jobs:
           printf "${{ secrets.OSSRH_SIGNING_KEY_RING_FILE }}" | base64 --decode > "/home/runner/secring.gpg"
       - name: Publish package to OSSRH
         run: |
-          gradle assemble publish \
+          gradle assemble publishToSonatype closeAndReleaseSonatypeStagingRepository \
             -Psigning.keyId=${{ secrets.OSSRH_SIGNING_KEY_ID }} \
             -Psigning.password=${{ secrets.OSSRH_SIGNING_KEY_PASSWORD }} \
             -Psigning.secretKeyRingFile=/home/runner/secring.gpg
