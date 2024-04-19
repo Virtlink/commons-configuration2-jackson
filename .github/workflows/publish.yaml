@@ -35,7 +35,7 @@ jobs:
           build-scan-publish: false   # Might contain private keys or sensitive information
       - name: Publish to Maven Central
         run: |
-          gradle assemble publishToSonatype closeAndReleaseSonatypeStagingRepository
+          gradle assemble publish closeAndReleaseSonatypeStagingRepository
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}

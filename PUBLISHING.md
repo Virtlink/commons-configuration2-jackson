@@ -33,16 +33,15 @@ Automatic publishing is preferred over manual publishing. To publish a new versi
 ## Publish Manually
 To publish a new version of the library manually from the command-line, follow [the setup](#setup) and then:
 
-1.  Build, sign, and publish the artifact using:
+1.  Build, sign, and publish the artifact, and then close and release the Maven Central repository using:
     ```shell
     ./gradlew publish closeAndReleaseSonatypeStagingRepository
     ```
-2.  Once the library has been published to Maven Central, it [must be released](#release-the-artifact).
-3.  Update the `README.md` and documentation to reflect the latest release of the library.
+2.  Update the `README.md` and documentation to reflect the latest release of the library.
 
 
-## Release the Artifact
-After publishing, the artifact must be released manually from Maven Central. To do so, follow these steps:
+## Close and Release the Staging Repository
+The `closeAndReleaseSonatypeStagingRepository` task is used to close and release the Maven Central staging repository. If this is not done, the artifact must be released manually from Maven Central. To do so, follow these steps:
 
 1.  [Login into OSSRH][sonatype].
 2.  Go to 'Staging Repositories' on the left, click the 'Refresh' button at the top to see the repositories.
