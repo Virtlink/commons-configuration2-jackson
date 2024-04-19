@@ -1,22 +1,22 @@
 ---
-name: Build
+name: Submit Dependencies
 
 on:  # yamllint disable-line rule:truthy
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+
+permissions:
+  contents: write
 
 jobs:
-  build:
-    name: Build
+  dependency-submission:
+    name: Submit Dependencies
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        java: [11, 17]
-        gradle: [wrapper]
+        os: [ubuntu-latest]   # Just one
+        java: [11]            # Just one
+        gradle: [wrapper]     # Just one
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -28,15 +28,10 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
-      - name: Setup Gradle ${{ matrix.gradle }}
-        uses: gradle/actions/setup-gradle@v3
+      - name: Generate and submit dependency graph
+        uses: gradle/actions/dependency-submission@v3
         with:
           gradle-version: ${{ matrix.gradle }}
           build-scan-publish: true
           build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
           build-scan-terms-of-use-agree: "yes"
-      - name: Build
-        run: |
-          gradle build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
