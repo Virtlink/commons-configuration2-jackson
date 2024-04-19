@@ -64,33 +64,35 @@ Obtain the short ID of the GPG subkey you want to use for signing. It's the 8-ch
 gpg --list-secret-keys --keyid-format SHORT
 ```
 
+> *Note*: If you have a master key and multiple subkeys, use the key ID of the _signing_ subkey (`[s]`).
+
 
 The key's password you should already know, and the secret keyring file is not available by default in modern GPG versions. Export it using the following command, where `$KEYID` is the short key ID:
 
 ```shell
-gpg --export-secret-keys $KEYID ~/.gnupg/secring.gpg
+gpg --export-secret-keys $KEYID > ~/.gnupg/secring.gpg
 ```
 
-Also create a base64-encoded version of the secret key ring:
+Also export an ASCII-armored version of the secret key:
 
 ```shell
-base64 ~/.gnupg/secring.gpg > ~/.gnupg/secring.gpg.b64
+gpg --export-secret-keys --armor $KEYID
 ```
 
-In the `~/.gradle/gradle.properties` file in your _home_ directory, add those values as the following properties:
+In the `~/.gradle/gradle.properties` file in your _home_ directory, add those values as the following properties (where `<myusername>` is your user account username):
 
 ```properties
 # GPG Signing
 signing.keyId=0ABA0F98
 signing.password=WAWFAFDcKxNFgZ8YQnjHMrXuxn02
-signing.secretKeyRingFile=/Users/myusername/.gnupg/secring.gpg
+signing.secretKeyRingFile=/Users/<myusername>/.gnupg/secring.gpg
 ```
 
 On the [repository settings Secrets page][repo-secrets], add those values as the following secrets:
 
 - `SIGNING_KEY_ID`: The short ID of the key, e.g., `0ABA0F98`
 - `SIGNING_KEY_PASSWORD`: The password of the key, e.g., `WAWFAFDcKxNFgZ8YQnjHMrXuxn02`
-- `SIGNING_KEYRING_FILE`: the base64-encoded keyring file `secring.gpg.b64`
+- `SIGNING_KEY`: the ASCII-armored key, starts with `-----BEGIN PGP PRIVATE KEY BLOCK-----`
 
 
 ### GitHub Packages

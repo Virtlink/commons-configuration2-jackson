@@ -33,19 +33,16 @@ jobs:
         with:
           gradle-version: ${{ matrix.gradle }}
           build-scan-publish: false   # Might contain private keys or sensitive information
-      - name: Decode GPG secret key ring
+      - name: Publish to Maven Central
         run: |
-          printf "${{ secrets.OSSRH_SIGNING_KEY_RING_FILE }}" | base64 --decode > "/home/runner/secring.gpg"
-      - name: Publish package to OSSRH
-        run: |
-          gradle assemble publishToSonatype closeAndReleaseSonatypeStagingRepository \
-            -Psigning.keyId=${{ secrets.OSSRH_SIGNING_KEY_ID }} \
-            -Psigning.password=${{ secrets.OSSRH_SIGNING_KEY_PASSWORD }} \
-            -Psigning.secretKeyRingFile=/home/runner/secring.gpg
+          gradle assemble publishToSonatype closeAndReleaseSonatypeStagingRepository
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
       - name: Release on GitHub
         uses: softprops/action-gh-release@v2
         with:
