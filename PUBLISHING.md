@@ -35,7 +35,7 @@ To publish a new version of the library manually from the command-line, follow [
 
 1.  Build, sign, and publish the artifact using:
     ```shell
-    ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
+    ./gradlew publish closeAndReleaseSonatypeStagingRepository
     ```
 2.  Once the library has been published to Maven Central, it [must be released](#release-the-artifact).
 3.  Update the `README.md` and documentation to reflect the latest release of the library.
